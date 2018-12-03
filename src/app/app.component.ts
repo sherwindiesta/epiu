@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'NgEPIU';
+  title = 'EPIU';
+  checked = false;
+
+  public show: boolean = true;
+
+  constructor( private router: Router ) { }
+
+  btnIagreeClick() {
+
+    if(this.checked) {
+      this.show = false;
+      this.router.navigate(['login']);
+    }    
+  } 
 }
+
