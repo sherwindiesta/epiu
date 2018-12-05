@@ -21,7 +21,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { DetailsService } from './details.service';
+import { Http, HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -47,10 +49,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatStepperModule,
     FormsModule,
     ReactiveFormsModule,
-    CdkStepperModule
+    CdkStepperModule,
+    HttpModule
   ],
   providers: [
-    MatSliderModule
+    MatSliderModule,
+    DetailsService
   ],
   bootstrap: [AppComponent]
 })
