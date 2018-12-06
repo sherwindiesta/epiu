@@ -1,0 +1,73 @@
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup" ngNativeValidate>
+      <ng-template matStepLabel>Personal Information</ng-template>
+      <div>
+        <mat-form-field>
+          <input  matInput placeholder="Last name" formControlName="firstCtrl" [value]="this.lastName" [required]="isRequired">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="First name" formControlName="firstCtrl" [value]="this.firstName" [required]="isRequired">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Middle name" formControlName="firstCtrl" [value]="this.middleName" >
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Dependent's Information</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup" [optional]="isOptional">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Employment Records</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="thirdCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="fourthFormGroup" [optional]="isOptional">
+    <form [formGroup]="fourthFormGroup">
+      <ng-template matStepLabel>Review Information</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="fourthCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

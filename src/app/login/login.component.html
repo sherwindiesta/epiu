@@ -1,0 +1,47 @@
+<div>
+  <mat-grid-list cols="1"  rowHeight="fit" style="height: 400px">
+ 
+    <mat-grid-tile>
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="ID Number" [(ngModel)]="id">
+            </mat-form-field>
+          </div>
+  
+        </mat-list-item>
+  
+        <mat-list-item role="listitem">
+  
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="TIN Number" [(ngModel)]="tin">
+            </mat-form-field>
+          </div>
+  
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]="db">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+
+            </mat-form-field>
+          </div>
+  
+        </mat-list-item>
+        <mat-list-item role="listitem">
+  
+        </mat-list-item>
+        <mat-list-item role="listitem" style="position: center">
+          <button mat-raised-button (click)="btnClick();">Submit</button>
+        </mat-list-item>
+        
+      </mat-list>
+     
+    </mat-grid-tile>
+    
+  </mat-grid-list>
+</div>
