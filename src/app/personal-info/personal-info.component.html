@@ -4,17 +4,17 @@
       <ng-template matStepLabel>Personal Information</ng-template>
       <div>
         <mat-form-field>
-          <input  matInput placeholder="Last name" formControlName="firstCtrl" [value]="this.lastName" [required]="isRequired">
+          <input  matInput placeholder="Last name" formControlName="frmCtrlLname" (keyup)="dataChange($event)" required >
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
-          <input matInput placeholder="First name" formControlName="firstCtrl" [value]="this.firstName" [required]="isRequired">
+          <input matInput placeholder="First name" formControlName="frmCtrlFname" required >
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
-          <input matInput placeholder="Middle name" formControlName="firstCtrl" [value]="this.middleName" >
+          <input matInput placeholder="Middle name" formControlName="frmCtrlMname" >
         </mat-form-field>
       </div>
       <div>
@@ -27,7 +27,7 @@
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Dependent's Information</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+        <input matInput placeholder="Mother's Maiden Name" formControlName="secondCtrl" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -40,7 +40,7 @@
     <form [formGroup]="thirdFormGroup">
       <ng-template matStepLabel>Employment Records</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Address" formControlName="thirdCtrl" required>
+        <input matInput placeholder="Previous Company" formControlName="thirdCtrl" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -49,17 +49,34 @@
     </form>
   </mat-step>
 
-  <mat-step [stepControl]="fourthFormGroup" [optional]="isOptional">
-    <form [formGroup]="fourthFormGroup">
+  <mat-step  [optional]="isOptional">
+    
       <ng-template matStepLabel>Review Information</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Address" formControlName="fourthCtrl" required>
-      </mat-form-field>
+      <div>
+        <h3>
+          LASTNAME: {{lastName}}
+        </h3>
+      </div>
+      <!-- <div>
+          <mat-form-field>
+            <input  matInput placeholder="Last name" formControlName="frmCtrlLname" readonly >
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="First name" formControlName="frmCtrlFname" readonly >
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="Middle name" formControlName="frmCtrlMname" >
+          </mat-form-field>
+        </div> -->
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
-    </form>
+   
   </mat-step>
 
   <mat-step>

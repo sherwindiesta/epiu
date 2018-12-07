@@ -19,6 +19,8 @@ export class PersonalInfoComponent implements OnInit {
   fourthFormGroup: FormGroup;
   isOptional = false;
   public show: boolean = false;
+  
+
 
   public firstName: string;
   public lastName: string;
@@ -37,11 +39,13 @@ export class PersonalInfoComponent implements OnInit {
     }
 
   ngOnInit() {
-
+    
     this.show = false;
 
     this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+      frmCtrlLname: [this.lastName, Validators.required],
+      frmCtrlFname: [this.firstName, Validators.required],
+      frmCtrlMname: [this.middleName, Validators.nullValidator]
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -49,8 +53,16 @@ export class PersonalInfoComponent implements OnInit {
     this.thirdFormGroup = this._formBuilder.group({
       thirdCtrl: ['', Validators.required]
     });
-    this.fourthFormGroup = this._formBuilder.group({
-      fourthCtrl: ['', Validators.required]
-    });
+    // this.fourthFormGroup = this._formBuilder.group({
+    //   frmCtrlLname: [this.lastName, Validators.required],
+    //   frmCtrlFname: [this.firstName, Validators.required],
+    //   frmCtrlMname: [this.middleName, Validators.nullValidator]
+    // });
+  }
+
+  dataChange(event: any) {
+    
+    this.lastName = event.target.value;
+    console.log(this.lastName);
   }
 }
