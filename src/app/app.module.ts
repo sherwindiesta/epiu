@@ -19,17 +19,20 @@ import { PersonalInfoComponent } from './personal-info/personal-info.component'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CdkStepperModule } from '@angular/cdk/stepper';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DetailsService } from './details.service';
 import { Http, HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { DialogMessageComponent } from './dialog-message/dialog-message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PersonalInfoComponent
+    PersonalInfoComponent,
+    DialogMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -50,12 +53,15 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     CdkStepperModule,
-    HttpModule
+    HttpModule,
+    MatSelectModule,
+    MatDialogModule
   ],
   providers: [
     MatSliderModule,
     DetailsService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ DialogMessageComponent ]
 })
 export class AppModule { }

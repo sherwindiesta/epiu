@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
   getDetails(id: number, tin: number, db: string) {
     const url = 'http://localhost:3000/getDetails?tin=' + tin + '&birthdate=' + db + '&id=' + id;
     
-   return this.http.get(url).pipe(
+    return this.http.get(url).pipe(
       map((res) => res.json())
     );
   }

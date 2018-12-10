@@ -1,25 +1,70 @@
 <mat-horizontal-stepper linear #stepper>
   <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup" ngNativeValidate>
+    <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Personal Information</ng-template>
-      <div>
-        <mat-form-field>
-          <input  matInput placeholder="Last name" formControlName="frmCtrlLname" (keyup)="dataChange($event)" required >
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="First name" formControlName="frmCtrlFname" required >
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="Middle name" formControlName="frmCtrlMname" >
-        </mat-form-field>
-      </div>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
+    
+
+      <mat-grid-list cols="3" rowHeight="3:1">
+        <!-- ********************************************* -->
+        <!-- 1ST ROW : START -->
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input  matInput placeholder="Last name" formControlName="frmCtrlLname" (keyup)="dataChange($event)" required >
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="First name" formControlName="frmCtrlFname" required >
+            </mat-form-field>
+          </div>
+
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Middle name" formControlName="frmCtrlMname" >
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        <!-- 1ST ROW : END -->
+
+        <!-- ********************************************* -->
+        <!-- 2ND ROW : START -->
+        <mat-grid-tile>
+          <div>
+      
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Date of Birth(MM/DD/YYYY)" formControlName="frmCtrlDB" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+
+            </mat-form-field>
+      
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+
+        </mat-grid-tile>
+        <mat-grid-tile>
+
+        </mat-grid-tile>
+        <!-- 2ND ROW : END -->
+
+        <!-- ********************************************* -->
+        <!-- Bottom button : START -->
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        <!-- Bottom button : END -->
+      </mat-grid-list>
+  
     </form>
   </mat-step>
 

@@ -14,12 +14,17 @@ export class AppComponent {
 
   constructor( private router: Router ) { }
 
-  btnIagreeClick() {
+  ngOnInit() {
+    this.router.navigate([''])
+  }
 
+  btnIagreeClick() {
     if(this.checked) {
       this.show = false;
       this.router.navigate(['login']);
-    }    
+    }
   } 
+
+  
 }
 
