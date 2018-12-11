@@ -26,7 +26,8 @@ import { DetailsService } from './details.service';
 import { Http, HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { DialogMessageComponent } from './dialog-message/dialog-message.component';
-
+import { MatDividerModule } from '@angular/material/divider';
+import { MatToolbarModule } from '@angular/material/toolbar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,9 @@ import { DialogMessageComponent } from './dialog-message/dialog-message.componen
     CdkStepperModule,
     HttpModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule,
+    MatToolbarModule
   ],
   providers: [
     MatSliderModule,

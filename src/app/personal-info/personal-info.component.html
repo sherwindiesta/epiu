@@ -1,3 +1,11 @@
+<!-- 
+<mat-list>
+  <mat-list-item>{{IDname}}</mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list> -->
+
+<mat-toolbar>{{IDname}}</mat-toolbar>
+
 <mat-horizontal-stepper linear #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
@@ -46,10 +54,22 @@
           </div>
         </mat-grid-tile>
         <mat-grid-tile>
-
+          <div>
+            <mat-form-field>
+              <mat-select placeholder="Gender" formControlName="frmCtrlGender" required>
+                <mat-option *ngFor="let g of gender" [value]="g.code">{{g.desc}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </mat-grid-tile>
         <mat-grid-tile>
-
+          <div>
+            <mat-form-field>
+              <mat-select placeholder="Marital Status" formControlName="frmCtrlMarital" required>
+                <mat-option *ngFor="let m of maritalStatus" [value]="m.MaritalID">{{m.MaritalStatus}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </mat-grid-tile>
         <!-- 2ND ROW : END -->
 

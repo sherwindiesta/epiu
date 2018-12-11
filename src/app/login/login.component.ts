@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
   public id: number;
   public tin: number;
   public db: Date;
+  fullName: string;
+
   constructor( 
     private router: Router,
     private detailsService: DetailsService,
@@ -39,16 +41,25 @@ export class LoginComponent implements OnInit {
   btnClick() {
     this.detailsService.getDetails(this.id, this.tin, moment(this.db).format('L')).subscribe(data => {
       if(data !== 'Invalid login') {
-        let navigationExtras: NavigationExtras = {
-          queryParams: {
-            "firstName": data[0]['FirstName'],
-            "lastName": data[0]['Surname'],
-            "middleName": data[0]['MiddleName'],
-            "birthDate": data[0]['BirthDate']
-          }
-        }
 
-        this.router.navigate(['personalInfo'], navigationExtras);
+        this.fullName = data[0]['FullName']
+        console.log(this.fullName);
+        this.detailsService.getEmployeeData(this.id).subscribe(data => {
+          if(data !== 'Invalid Data') {
+
+            let navigationExtras: NavigationExtras = {
+              queryParams: data[0] 
+            }
+
+              this.router.navigate(['personalInfo'], navigationExtras)
+            }
+        });
+
+        // let navigationExtras: NavigationExtras = {
+        //   queryParams: data[0]
+        // }
+
+        // this.router.navigate(['personalInfo'], navigationExtras)
 
       } else {
         this.openDialog();
