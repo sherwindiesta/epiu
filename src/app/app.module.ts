@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,12 +27,16 @@ import { RouterModule } from '@angular/router';
 import { DialogMessageComponent } from './dialog-message/dialog-message.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerComponent } from './spinner/spinner.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PersonalInfoComponent,
-    DialogMessageComponent
+    DialogMessageComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSelectModule,
     MatDialogModule,
     MatDividerModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     MatSliderModule,

@@ -8,9 +8,13 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogContent } from '@ang
 })
 export class DialogMessageComponent implements OnInit {
 
+  description:string;
+
   constructor(
     public dialogRef: MatDialogRef<DialogMessageComponent>,
-    @Inject(MAT_DIALOG_DATA)DialogData) {}
+    @Inject(MAT_DIALOG_DATA) dialogData) {
+      this.description = dialogData.description
+    }
 
   onNoClick(): void {
     this.dialogRef.close();

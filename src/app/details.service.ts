@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Http, Response } from '@angular/http';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +33,12 @@ import { map } from 'rxjs/operators';
   }
 
   returnData(url: any) {
-    return this.http.get(url).pipe(
-      map((res) => res.json())
+    return this.http.get(url)
+    .pipe(
+      map((res) => res.json()),
+      catchError(error => 
+        throwError(new Error('Server Error, please contact HR Analytics immediately.').message)
+      )
     );
   }
 

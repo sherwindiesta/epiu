@@ -5,10 +5,13 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { DetailsService } from '../details.service';
 import * as moment from 'moment';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
 import { DialogMessageComponent } from '../dialog-message/dialog-message.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ViewEncapsulation } from '@angular/core';
+import { map, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +27,7 @@ export class LoginComponent implements OnInit {
   public tin: number;
   public db: Date;
   fullName: string;
+  error: Error;
 
   constructor( 
     private router: Router,
@@ -39,7 +43,8 @@ export class LoginComponent implements OnInit {
   }
 
   btnClick() {
-    this.detailsService.getDetails(this.id, this.tin, moment(this.db).format('L')).subscribe(data => {
+    this.detailsService.getDetails(this.id, this.tin, moment(this.db).format('L'))
+    .subscribe(data => {
       if(data !== 'Invalid login') {
 
         this.fullName = data[0]['FullName']
@@ -62,17 +67,31 @@ export class LoginComponent implements OnInit {
         // this.router.navigate(['personalInfo'], navigationExtras)
 
       } else {
-        this.openDialog();
+        this.openDialog('Invalid login');
         return;
       }
-    })
-    
+    }, error => {
+      this.error = error
+      this.openDialog(error);
+    });
   } 
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogMessageComponent, {
-      width: '250px',
-    });
+  openDialog(message): void {
+    console.log(message);
+    const dialogConfig = new MatDialogConfig();
+
+    // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      id: 1,
+      description: message,
+      width: '250px'
+    };
+
+    //this.dialog.open(DialogMessageComponent, dialogConfig);
+
+    const dialogRef = this.dialog.open(DialogMessageComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
