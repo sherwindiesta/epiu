@@ -22,6 +22,11 @@ import { HttpErrorResponse } from '@angular/common/http';
     return this.returnData(url);
   }
 
+  getPhilippinePostalCodes() {
+    const url = 'http://localhost:3000/getPhilippinePostalCodes';
+    return this.returnData(url);
+  }
+
   getMaritalStatusList() {
     const url = 'http://localhost:3000/getMaritalStatusList';
     return this.returnData(url);
@@ -37,7 +42,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     .pipe(
       map((res) => res.json()),
       catchError(error => 
-        throwError(new Error('Server Error, please contact HR Analytics immediately.').message)
+        throwError(new Error('Server Error, please contact HR Analytics immediately.'))
       )
     );
   }

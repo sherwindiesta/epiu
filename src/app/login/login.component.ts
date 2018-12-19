@@ -13,6 +13,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,6 +22,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   public show: boolean = false;
+  public submitted: boolean = false;
   data: any [];
 
   public id: number;
@@ -28,6 +30,8 @@ export class LoginComponent implements OnInit {
   public db: Date;
   fullName: string;
   error: Error;
+  public showSpinner: boolean = true;
+  
 
   constructor( 
     private router: Router,
@@ -40,39 +44,38 @@ export class LoginComponent implements OnInit {
     this.id = this.id;
     this.tin = this.tin;
     this.db = this.db;
+    //this.submitted = false;
+    
+      setInterval(() => {
+        this.showSpinner = false;
+      }, 1000);
+    
   }
 
   btnClick() {
+    
+    this.submitted = true;
+
     this.detailsService.getDetails(this.id, this.tin, moment(this.db).format('L'))
     .subscribe(data => {
+      
       if(data !== 'Invalid login') {
 
-        this.fullName = data[0]['FullName']
-        console.log(this.fullName);
-        this.detailsService.getEmployeeData(this.id).subscribe(data => {
-          if(data !== 'Invalid Data') {
-
-            let navigationExtras: NavigationExtras = {
-              queryParams: data[0] 
-            }
-
-              this.router.navigate(['personalInfo'], navigationExtras)
-            }
-        });
-
-        // let navigationExtras: NavigationExtras = {
-        //   queryParams: data[0]
-        // }
-
-        // this.router.navigate(['personalInfo'], navigationExtras)
+        let navigationExtras: NavigationExtras = {
+          queryParams: data[0] 
+        }
+        this.router.navigate(['personalInfo'], navigationExtras);
+        this.submitted = false;
 
       } else {
         this.openDialog('Invalid login');
+        this.submitted = false;
         return;
       }
     }, error => {
       this.error = error
       this.openDialog(error);
+      this.submitted = false;
     });
   } 
 
@@ -82,6 +85,8 @@ export class LoginComponent implements OnInit {
 
     // dialogConfig.disableClose = true;
     // dialogConfig.autoFocus = true;
+
+    
 
     dialogConfig.data = {
       id: 1,
@@ -96,5 +101,8 @@ export class LoginComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+
   }
+
+  
 }

@@ -8,7 +8,8 @@ import * as moment from 'moment';
 import { DialogMessageComponent } from '../dialog-message/dialog-message.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DetailsService } from '../details.service';
-import { LoginComponent } from '../login/login.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+// import { LoginComponent } from '../login/login.component';
 
 export interface Gender {
   code: string;
@@ -23,45 +24,51 @@ export interface Gender {
 })
 export class PersonalInfoComponent implements OnInit {
   
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
-  fourthFormGroup: FormGroup;
-  public show: boolean = false;
-  public firstName: string;
-  public lastName: string;
-  public middleName: string;
+  firstFormGroup; secondFormGroup; thirdFormGroup; fourthFormGroup: FormGroup;
+  
+  public show; showSpinner: boolean = false;
+  
+  public lastName; firstName; middleName; 
+  genderCode; genderDesc; selectedGender; 
+  selectedMarital; selectedPostalCity1; 
+  selectedPostalCity2; IDname; add11; add12; 
+  add13; add21; add22; add23: string;
+
   public birthDate: Date;
   public dialog: MatDialog;
-  public genderCode: string;
-  public genderDesc: string;
-  public gender: string;
-  public selectedGender: string;
-  public maritalStatus: any = [];
-  public selectedMarital: string;
-  public IDname: string;
- 
+  public gender; maritalStatus; postalCity1; postalCity2: any = [];
   
   constructor( private _formBuilder: FormBuilder, 
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
     private route: ActivatedRoute,
-    private detailsService: DetailsService,
-    private login: LoginComponent ) 
+    private detailsService: DetailsService ) 
     {
 
       this.route.queryParams.subscribe(params => {
+        console.log(params);
+        this.IDname = params['EmployeeIDName']
         this.firstName = params['FirstName'];
         this.lastName = params['Surname'];
         this.middleName = params['MiddleName'];
         this.birthDate = params['BirthDate'];
         this.selectedGender = params['Gender'];
         this.selectedMarital = params['MaritalStatus'];
-        //this.IDname = params['EmployeeID'] + " - " + params['FullName'];
-        this.IDname = params['EmployeeID'] + " - " + this.login.fullName;
+        this.add11 = params['Address11'];
+        this.add12 = params['Address12'];
+        this.add13 = params['Address13'];
+        this.add21 = params['Address21'];
+        this.add22 = params['Address22'];
+        this.add23 = params['Address23'];
+        this.selectedPostalCity1 = params['CityID11'];
+        this.selectedPostalCity2 = params['CityID21'];
+        console.log(this.selectedPostalCity1)
+        // this.IDname = params['EmployeeID'] + " - " + params['FullName'];
+        // this.IDname = params['EmployeeID'] + " - " + this.login.fullName;
       });
       this.getListGender();
       this.getListMaritalStatus();
+      this.getListPhilippinesPostalCode();
     }
 
   ngOnInit() {
@@ -71,7 +78,15 @@ export class PersonalInfoComponent implements OnInit {
       frmCtrlMname: [this.middleName, Validators.nullValidator],
       frmCtrlDB: [this.birthDate, Validators.required],
       frmCtrlGender: [this.selectedGender, Validators.required],
-      frmCtrlMarital: [this.selectedMarital, Validators.required]
+      frmCtrlMarital: [this.selectedMarital, Validators.required],
+      frmCtrlCity1: [this.selectedPostalCity1, Validators.nullValidator],
+      frmCtrlCity2: [this.selectedPostalCity2, Validators.nullValidator],
+      frmCtrlAddress11: [this.add11, Validators.nullValidator],
+      frmCtrlAddress12: [this.add12, Validators.nullValidator],
+      frmCtrlAddress13: [this.add13, Validators.nullValidator],
+      frmCtrlAddress21: [this.add21, Validators.nullValidator],
+      frmCtrlAddress22: [this.add22, Validators.nullValidator],
+      frmCtrlAddress23: [this.add23, Validators.nullValidator]
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -79,6 +94,10 @@ export class PersonalInfoComponent implements OnInit {
     this.thirdFormGroup = this._formBuilder.group({
       thirdCtrl: ['', Validators.required]
     });
+
+    setInterval(() => {
+      this.showSpinner = false;
+    }, 1000);
   }
 
   dataChange(event: any) {
@@ -107,7 +126,7 @@ export class PersonalInfoComponent implements OnInit {
   getListGender() {
     this.detailsService.getGenderList().subscribe(data => {
       if(data) {
-        this.gender = [data][0]
+        this.gender = data;
       }
     });
   }
@@ -115,9 +134,18 @@ export class PersonalInfoComponent implements OnInit {
   getListMaritalStatus() {
     this.detailsService.getMaritalStatusList().subscribe(data => {
       if(data) {
-        this.maritalStatus = data;     
+        this.maritalStatus = data;
       }
     });
+  }
+
+  getListPhilippinesPostalCode() {
+    this.detailsService.getPhilippinePostalCodes().subscribe(data => {
+      if(data) {
+        this.postalCity1 = data;
+        this.postalCity2 = data;
+      }
+    }).unsubscribe();
   }
 }
 

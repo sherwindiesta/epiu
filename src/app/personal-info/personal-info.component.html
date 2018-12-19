@@ -11,8 +11,11 @@
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Personal Information</ng-template>
     
+      
 
       <mat-grid-list cols="3" rowHeight="3:1">
+        <mat-list-item>Basic Information</mat-list-item>
+        <mat-divider></mat-divider>
         <!-- ********************************************* -->
         <!-- 1ST ROW : START -->
         <mat-grid-tile>
@@ -37,6 +40,7 @@
             </mat-form-field>
           </div>
         </mat-grid-tile>
+
         <!-- 1ST ROW : END -->
 
         <!-- ********************************************* -->
@@ -71,16 +75,109 @@
             </mat-form-field>
           </div>
         </mat-grid-tile>
-        <!-- 2ND ROW : END -->
+        
 
-        <!-- ********************************************* -->
-        <!-- Bottom button : START -->
+
+     
+      </mat-grid-list>
+
+      <mat-grid-list cols="4" rowHeight="4:1">
+        <mat-list-item>Address</mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+          <h4>Present Address</h4>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <h4>Permanent Address</h4>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+        
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile>
           <div>
-            <button mat-button matStepperNext>Next</button>
+            <mat-form-field>
+              <input matInput placeholder="Street/Unit/Block/Lot Number" formControlName="frmCtrlAddress11" >
+            </mat-form-field>
           </div>
         </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Street/Unit/Block/Lot Number" formControlName="frmCtrlAddress21" >
+              </mat-form-field>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Street/Unit Name" formControlName="frmCtrlAddress12" >
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Street/Unit Name" formControlName="frmCtrlAddress22" >
+              </mat-form-field>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Subdivision/Block Name" formControlName="frmCtrlAddress13" >
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+  
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Subdivision/Block Name" formControlName="frmCtrlAddress23" >
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+
+        <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <mat-select placeholder="City" formControlName="frmCtrlCity1">
+                <mat-option *ngFor="let p of postalCity1" [value]="p.ID">{{p.Location}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <mat-select placeholder="City" formControlName="frmCtrlCity2">
+                <mat-option *ngFor="let p of postalCity2" [value]="p.ID">{{p.Location}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
+
+        <mat-grid-tile></mat-grid-tile>
+        <!-- Bottom button : START -->
+        <mat-grid-tile>
+          <div class="fab-containerNext">
+            <button mat-fab matStepperNext>Next</button>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
         <!-- Bottom button : END -->
       </mat-grid-list>
@@ -90,13 +187,15 @@
 
   <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
     <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Dependent's Information</ng-template>
+      <ng-template matStepLabel>Relatives Information</ng-template>
       <mat-form-field>
         <input matInput placeholder="Mother's Maiden Name" formControlName="secondCtrl" required>
       </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+      <div class="fab-containerPrev">
+        <button mat-fab matStepperPrevious>Back</button>
+      </div>
+      <div class="fab-containerNext">
+        <button mat-fab matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -153,3 +252,4 @@
     </div>
   </mat-step>
 </mat-horizontal-stepper>
+<app-spinner *ngIf="showSpinner"></app-spinner>

@@ -47,11 +47,14 @@
 
     <mat-grid-tile>
         <mat-list-item role="listitem" style="position: center">
-          <button mat-raised-button (click)="btnClick();">Submit</button>
+          <button class="buttonSubmit" mat-raised-button (click)="btnClick();" [disabled]='submitted'>Submit</button>
         </mat-list-item>
     </mat-grid-tile>
     
   </mat-grid-list>
-  <mat-spinner></mat-spinner>
+  <div class="loading-indicator"  *ngIf="showSpinner">
+    <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+  </div>
+  
 </ng-container>
 
