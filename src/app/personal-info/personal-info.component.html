@@ -75,13 +75,10 @@
             </mat-form-field>
           </div>
         </mat-grid-tile>
-        
-
-
      
       </mat-grid-list>
 
-      <mat-grid-list cols="4" rowHeight="4:1">
+      <mat-grid-list cols="4" rowHeight="5:1">
         <mat-list-item>Address</mat-list-item>
         <mat-divider></mat-divider>
 
@@ -152,8 +149,10 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="City" formControlName="frmCtrlCity1">
-                <mat-option *ngFor="let p of postalCity1" [value]="p.ID">{{p.Location}}</mat-option>
+              <mat-select placeholder="Postal" formControlName="frmCtrlCity1" required>
+              <!-- <mat-select placeholder="Postal" formControlName="selectedCity1" required> -->
+                <!-- <mat-option *ngFor="let p of postalCity1" [value]="p.ID">{{p.Location}}</mat-option> -->
+                <mat-option *ngFor="let p of postalCity1" [value]="p.Area">{{p.Location}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -162,12 +161,13 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="City" formControlName="frmCtrlCity2">
+              <mat-select placeholder="Postal" formControlName="frmCtrlCity2" required>
                 <mat-option *ngFor="let p of postalCity2" [value]="p.ID">{{p.Location}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         </mat-grid-tile>
+
         <mat-grid-tile></mat-grid-tile>
 
         <mat-grid-tile></mat-grid-tile>

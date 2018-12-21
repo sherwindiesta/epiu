@@ -27,6 +27,11 @@ import { HttpErrorResponse } from '@angular/common/http';
     return this.returnData(url);
   }
 
+  getSpecificPhilippinePostalCodes(postalID: number) {
+    const url = 'http://localhost:3000/getSpecificPhilippinePostalCodes?ID=' + postalID;
+    return this.returnData(url);
+  }
+
   getMaritalStatusList() {
     const url = 'http://localhost:3000/getMaritalStatusList';
     return this.returnData(url);
