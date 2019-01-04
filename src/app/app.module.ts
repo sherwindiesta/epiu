@@ -31,6 +31,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { MatTableModule } from '@angular/material/table';
 
 // const fabRipple = new MDCRipple(document.querySelector('.mdc-fab'));
 
@@ -66,7 +67,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     MatDialogModule,
     MatDividerModule,
     MatToolbarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableModule
   ],
   providers: [
     MatSliderModule,

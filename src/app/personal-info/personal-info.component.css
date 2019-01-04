@@ -21,3 +21,42 @@
     flex-direction: column-reverse;
     align-items: center; 
 }
+
+mat-card {
+    width: 80% !important;
+}
+
+mat-card-content {
+    padding: 10px !important;
+}
+
+
+.height100p {
+    height: 100%;
+}
+.mat-grid-tile-custom {
+    overflow: visible !important;
+}
+
+.custom-mat-list { /* this is bad! */
+    padding-top: 20% !important;
+}
+
+/* .mat-grid-tile-custom .mat-figure {
+    
+    top: 5px !important;
+    height: 50%!important;
+} */
+
+
+table {
+    width: 100%;
+    margin-top: 10px !important;
+    margin-bottom: 40px !important;
+    box-shadow: none !important;
+  }
+
+  .mat-icon-button {
+      text-align: center;
+  }
+

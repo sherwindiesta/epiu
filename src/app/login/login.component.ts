@@ -59,19 +59,43 @@ export class LoginComponent implements OnInit {
     this.detailsService.getDetails(this.id, this.tin, moment(this.db).format('L'))
     .subscribe(data => {
       
-      if(data !== 'Invalid login') {
+      // if(data !== 'Invalid login') {
+      //   console.log('first');
+      //   let navigationExtras: NavigationExtras = {
+      //     queryParams: data[0] 
+      //   }
+      //   this.router.navigate(['personalInfo'], navigationExtras);
+      //   this.submitted = false;
 
+      // } 
+      // else if(data !== 'Invalid Data') {
+      //   console.log('second');
+      //   let navigationExtras: NavigationExtras = {
+      //     queryParams: data[0] 
+      //   }
+      //   this.router.navigate(['personalInfo'], navigationExtras);
+      //   this.submitted = false;
+      // }
+      // else {
+      //   this.openDialog('Invalid login');
+      //   this.submitted = false;
+      //   return;
+      // }
+
+      if(data == 'Invalid login' ||  data == 'Invalid Data') {
+        this.openDialog('Invalid login');
+        this.submitted = false;
+        return;
+      }
+      else {
         let navigationExtras: NavigationExtras = {
           queryParams: data[0] 
         }
         this.router.navigate(['personalInfo'], navigationExtras);
         this.submitted = false;
-
-      } else {
-        this.openDialog('Invalid login');
-        this.submitted = false;
-        return;
       }
+
+
     }, error => {
       this.error = error
       this.openDialog(error);
@@ -80,7 +104,6 @@ export class LoginComponent implements OnInit {
   } 
 
   openDialog(message): void {
-    console.log(message);
     const dialogConfig = new MatDialogConfig();
 
     // dialogConfig.disableClose = true;

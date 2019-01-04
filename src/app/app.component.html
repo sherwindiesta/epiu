@@ -1,14 +1,16 @@
 <ng-container *ngIf="show">
-        <mat-grid-list cols="1"  rowHeight="fit" style="height: 400px">
+        <mat-grid-list cols="1"  rowHeight="7:1">
             <mat-grid-tile>
                 <mat-card>
-                        I hereby certify that the information given by me is true and correct. 
-                        I understand that any material misrepresentation or falsity therein shall be 
-                        construed as an offense which is stated in the Code of Discipline as Rule IV Item 30.
+                    Makati Medical Center respects privacy of personal data.  
+                    We are committed to handling with care your personal data that are under our control. 
+                    It is your right to be informed how this hospital collects and uses your personal information. 
+                    More information on how we handle your Personal Data, including the purposes for which we collect, use, 
+                    and disclose them are available through this link ----
                 </mat-card>
             </mat-grid-tile>
             <mat-grid-tile>
-                <mat-checkbox [(ngModel)]="checked">I agree</mat-checkbox>
+                <mat-checkbox [(ngModel)]="checked">Check to Proceed</mat-checkbox>
             </mat-grid-tile>
             <mat-grid-tile>
                 <button mat-raised-button (click)="btnIagreeClick()">Submit</button>

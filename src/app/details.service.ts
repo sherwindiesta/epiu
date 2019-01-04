@@ -22,8 +22,13 @@ import { HttpErrorResponse } from '@angular/common/http';
     return this.returnData(url);
   }
 
-  getPhilippinePostalCodes() {
-    const url = 'http://localhost:3000/getPhilippinePostalCodes';
+  getPhilippinePostalCodes(area: string) {
+    const url = 'http://localhost:3000/getPhilippinePostalCodes?area=' + area;
+    return this.returnData(url);
+  }
+
+  getDistinctPhilippinePostalCodes() {
+    const url = 'http://localhost:3000/getDistinctPhilippinePostalCodes';
     return this.returnData(url);
   }
 
@@ -32,8 +37,8 @@ import { HttpErrorResponse } from '@angular/common/http';
     return this.returnData(url);
   }
 
-  getMaritalStatusList() {
-    const url = 'http://localhost:3000/getMaritalStatusList';
+  getCivilStatusList(id: number) {
+    const url = 'http://localhost:3000/getCivilStatusList?ID=' + id;
     return this.returnData(url);
   }
 
@@ -41,6 +46,47 @@ import { HttpErrorResponse } from '@angular/common/http';
     const url = 'http://localhost:3000/getEmployeeData?id=' + id;
     return this.returnData(url);
   }
+
+  getStructureType() {
+    const url = 'http://localhost:3000/getStructureType';
+    return this.returnData(url);
+  }
+
+  getOwnershipType() {
+    const url = 'http://localhost:3000/getOwnershipType';
+    return this.returnData(url);
+  }
+
+  getBloodType() {
+    const url = 'http://localhost:3000/getBloodType';
+    return this.returnData(url);
+  }
+
+  getContactRelationship() {
+    const url = 'http://localhost:3000/getContactRelationship';
+    return this.returnData(url);
+  }
+
+  getFamilyMembersData(id: number) {
+    const url = 'http://localhost:3000/getFamilyMembersData?id=' + id;
+    return this.returnData(url);
+  }
+
+  getFamilyMembersDataParents(id: number) {
+    const url = 'http://localhost:3000/getFamilyMembersDataParents?id=' + id;
+    return this.returnData(url);
+  }
+
+  getFamilyMembersDataSiblings(id: number) {
+    const url = 'http://localhost:3000/getFamilyMembersDataSiblings?id=' + id;
+    return this.returnData(url);
+  }
+
+  getFamilyMembersDataSpouse(id: number) {
+    const url = 'http://localhost:3000/getFamilyMembersDataSpouse?id=' + id;
+    return this.returnData(url);
+  }
+
 
   returnData(url: any) {
     return this.http.get(url)
@@ -51,5 +97,8 @@ import { HttpErrorResponse } from '@angular/common/http';
       )
     );
   }
+
+ 
+  
 
 }

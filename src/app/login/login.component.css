@@ -21,3 +21,15 @@
     height: 100%;
     /* background-color: rgba(0,0,0,0.3); */
   }
+
+/* .mat-figure  {
+    margin-top: 0px !important;
+    height: unset !important;
+    
+} */
+
+.mat-figure .mat-list  {
+  margin-top: 100px !important;
+  height: unset !important;
+  
+}

@@ -14,3 +14,18 @@
 .mat-toolbar {
     background-color: #ffff;
 }
+
+
+.mat-grid-tile-custom .mat-figure {
+    padding-top: 2px !important;
+    align-items: unset !important;
+    height: 50% !important;
+}
+
+.mat-form-field-infix {
+    width: 230px !important;
+}
+
+h1 {
+    font-family: 
+}
