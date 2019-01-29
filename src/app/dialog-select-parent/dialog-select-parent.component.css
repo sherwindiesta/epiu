@@ -1,0 +1,9 @@
+.mat-dialog-content {
+    font-family: Roboto,"Helvetica Neue",sans-serif !important;
+}
+
+.mat-dialog-container {
+    height: 400px !important;
+    width: 400px !important;
+}
+

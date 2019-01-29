@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 // import { MDCRipple } from '@material/ripple';
-
+import {MediaObserver} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,6 +33,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { MatTableModule } from '@angular/material/table';
+import { DialogSelectParentComponent } from './dialog-select-parent/dialog-select-parent.component';
+import { DialogSelectEducationTypeComponent } from './dialog-select-education-type/dialog-select-education-type.component';
+import { DialogSelectAddLanguageComponent } from './dialog-select-add-language/dialog-select-add-language.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FinishPageComponent } from './finish-page/finish-page.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 // const fabRipple = new MDCRipple(document.querySelector('.mdc-fab'));
 
@@ -41,7 +49,11 @@ import { MatTableModule } from '@angular/material/table';
     LoginComponent,
     PersonalInfoComponent,
     DialogMessageComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DialogSelectParentComponent,
+    DialogSelectEducationTypeComponent,
+    DialogSelectAddLanguageComponent,
+    FinishPageComponent
   ],
   imports: [
     BrowserModule,
@@ -68,13 +80,21 @@ import { MatTableModule } from '@angular/material/table';
     MatDividerModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
-    MatTableModule
+    MatTableModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatAutocompleteModule,
+    FlexLayoutModule
   ],
   providers: [
     MatSliderModule,
-    DetailsService
+    DetailsService,
+    LoginComponent
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ DialogMessageComponent ]
+  entryComponents: [ DialogMessageComponent, 
+    DialogSelectParentComponent, 
+    DialogSelectEducationTypeComponent,
+    DialogSelectAddLanguageComponent ]
 })
 export class AppModule { }

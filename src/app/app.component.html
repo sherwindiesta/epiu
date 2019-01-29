@@ -1,21 +1,54 @@
 <ng-container *ngIf="show">
-        <mat-grid-list cols="1"  rowHeight="7:1">
+
+        <!-- <mat-grid-list cols="1"  rowHeight="7:1">
             <mat-grid-tile>
-                <mat-card>
-                    Makati Medical Center respects privacy of personal data.  
-                    We are committed to handling with care your personal data that are under our control. 
-                    It is your right to be informed how this hospital collects and uses your personal information. 
-                    More information on how we handle your Personal Data, including the purposes for which we collect, use, 
-                    and disclose them are available through this link ----
-                </mat-card>
+                
+            <mat-card>
+                <h4>
+                    As an employee of Makati Medical Center (MMC), I am voluntarily disclosing to MMC all personal information required by the Employee Personal Information Update (EPIU), which I shall provide through the accomplishing of this electronic form. I am also giving MMC permission to collect, record, and process the information in the said form.
+            
+                    I understand that the purpose of disclosing such information is for the update of the employee database managed by the Human Resources Management & Development Division.
+                    
+                    I hereby acknowledge that any misrepresentation or omission that is subsequently discovered will be sufficient grounds for MMC to implement appropriate sanctions.
+    
+                </h4>
+            </mat-card>
+                
+                
             </mat-grid-tile>
             <mat-grid-tile>
                 <mat-checkbox [(ngModel)]="checked">Check to Proceed</mat-checkbox>
             </mat-grid-tile>
             <mat-grid-tile>
-                <button mat-raised-button (click)="btnIagreeClick()">Submit</button>
+                <button mat-button (click)="btnIagreeClick()">Submit</button>
             </mat-grid-tile>
-        </mat-grid-list>
+        </mat-grid-list> -->
+
+        <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+            <mat-card>
+                <h4>
+                    As an employee of Makati Medical Center (MMC), I am voluntarily disclosing to MMC all personal information required by the Employee Personal Information Update (EPIU), which I shall provide through the accomplishing of this electronic form. I am also giving MMC permission to collect, record, and process the information in the said form.
+            
+                    I understand that the purpose of disclosing such information is for the update of the employee database managed by the Human Resources Management & Development Division.
+                    
+                    I hereby acknowledge that any misrepresentation or omission that is subsequently discovered will be sufficient grounds for MMC to implement appropriate sanctions.
+    
+                </h4>
+            </mat-card>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+            <mat-checkbox [(ngModel)]="checked">Check to Proceed</mat-checkbox>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="center">
+            <button mat-button (click)="btnIagreeClick()">Submit</button>
+        </div>
+        
 </ng-container>
 
 <router-outlet></router-outlet>

@@ -1,0 +1,56 @@
+<ng-container>
+  <div  mat-dialog-content>
+      <h1 mat-dialog-title>Select additional {{title}} language</h1>
+
+      <mat-form-field>
+        <mat-select (selectionChange)="languageTypeChange($event)" placeholder="Select Language">
+          <mat-option *ngFor="let t of languageTypes" [value]="[t.ID, t.LanguageDialect]">
+            {{t.LanguageDialect}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-select (selectionChange)="languageLevelChange($event)" placeholder="Select Level">
+          <mat-option *ngFor="let l of languageLevel" [value]="[l.ID, l.LanguageKnowledge]">
+            {{l.LanguageKnowledge}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-select (selectionChange)="selectEducaton($event)" placeholder="Did you take formal education to acquire the language?">
+          <mat-option *ngFor="let e of formalEducation" [value]="e.value">
+            {{e.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-select (selectionChange)="selectCert($event)" placeholder="Do you have any certification to support your language education?">
+          <mat-option *ngFor="let c of certification" [value]="c.value">
+            {{c.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-select (selectionChange)="selectWilling($event)" placeholder="Are you willing to serve as interpreter for our foreign and differently-abled patients, if needed?">
+          <mat-option *ngFor="let s of serve" [value]="s.value">
+            {{s.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-select (selectionChange)="selectLanguageSkillLevel($event)" placeholder="Select Language Skill Level">
+          <mat-option *ngFor="let s of skillLevel" [value]="s.value">
+            {{s.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <button mat-button [mat-dialog-close]="this.data" cdkFocusInitial (click)="btnOKClick()">OK</button>
+  </div>
+   
+</ng-container>

@@ -1,0 +1,14 @@
+<ng-container>
+  <div  mat-dialog-content>
+      <h1 mat-dialog-title>Select Parent Type</h1>
+      <section class="example-section">
+        <mat-checkbox [(ngModel)]="father" [disabled]="disabledF">Father</mat-checkbox>
+        <br>
+        <mat-checkbox [(ngModel)]="mother" [disabled]="disabledM">Mother</mat-checkbox>
+      </section>
+      <br>
+      <button mat-button [mat-dialog-close]="this.data" cdkFocusInitial (click)="btnOKClick()">OK</button>
+  </div>
+   
+</ng-container>
+

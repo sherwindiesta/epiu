@@ -1,0 +1,25 @@
+<ng-container>
+  <div  mat-dialog-content>
+      <h1 mat-dialog-title>Select Education Type Details</h1>
+
+      <mat-form-field>
+          <mat-select (selectionChange)="educationLevelChange($event)" placeholder="Level">
+              <mat-option *ngFor="let e of educationLevel" [value]="e.LevelOfEducation">
+                {{e.LevelOfEducation}}
+              </mat-option>
+            </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+          <mat-select (selectionChange)="educationStatusChange($event)" placeholder="Status">
+              <mat-option *ngFor="let e of educationStatus" [value]="e.StatusOfEducation">
+                {{e.StatusOfEducation}}
+              </mat-option>
+            </mat-select>
+      </mat-form-field>
+
+      <br>
+      <button mat-button [mat-dialog-close]="this.data" cdkFocusInitial (click)="btnOKClick()">OK</button>
+  </div>
+   
+</ng-container>

@@ -30,6 +30,10 @@ mat-card-content {
     padding: 10px !important;
 }
 
+.mat-dialog-content {
+    height: 800px !important;
+}
+
 
 .height100p {
     height: 100%;
@@ -54,9 +58,24 @@ table {
     margin-top: 10px !important;
     margin-bottom: 40px !important;
     box-shadow: none !important;
-  }
+}
 
-  .mat-icon-button {
-      text-align: center;
-  }
+.mat-icon-button {
+    text-align: center;
+}
 
+.customMatFormField {
+    width: 150px !important;
+}
+
+.customMatFormFieldDate {
+    width: 100px !important;
+}
+
+.mat-option-customize {
+    font-size: smaller !important;
+}
+
+em {
+    font-size: 12px !important;
+}

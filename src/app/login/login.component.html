@@ -1,62 +1,44 @@
 <ng-container>
+  <br>
+  <br>
 
-<mat-grid-list cols="1"  rowHeight="7:1">
-    
-    <mat-grid-tile>
-          
-          <mat-list role="list">
-              <!-- <h1 matInput>Enter Your Credentials</h1> -->
-              <mat-list-item role="listitem">
-                <div>
-                  <mat-form-field>
-                    <input matInput placeholder="ID Number" [(ngModel)]="id">
-                  </mat-form-field>
-                </div>
-        
-              </mat-list-item>
-        
-              <mat-list-item role="listitem">
-        
-                <div>
-                  <mat-form-field>
-                    <input matInput placeholder="TIN Number" [(ngModel)]="tin">
-                  </mat-form-field>
-                </div>
-        
-              </mat-list-item>
-              <mat-list-item role="listitem">
-                <div>
-                  <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Date of Birth(MM/DD/YYYY)" [(ngModel)]="db">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-      
-                  </mat-form-field>
-                </div>
-        
-              </mat-list-item>
-              <mat-list-item role="listitem">
-        
-              </mat-list-item>
-              
-              
-            </mat-list>
+  <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+    <mat-form-field>
+      <input matInput placeholder="ID Number" [(ngModel)]="id" required>
+    </mat-form-field>
+  </div>
+  <br>
+  <br>
+  
+  <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+    <mat-form-field>
+      <input type="date" matInput [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]="db" onfocus="(this.type='date')" onblur="(this.type='text')">
+      <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+      <mat-datepicker #picker></mat-datepicker>
 
-     
-    
+    </mat-form-field>
+  </div>
+  <br>
+  <br>
+  
+  <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+    <mat-list-item role="listitem" style="position: center">
+      <button class="buttonSubmit" mat-button (click)="btnClick();" [disabled]='submitted'>Submit</button>
+    </mat-list-item>
 
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-        <mat-list-item role="listitem" style="position: center">
-          <button class="buttonSubmit" mat-raised-button (click)="btnClick();" [disabled]='submitted'>Submit</button>
-        </mat-list-item>
-    </mat-grid-tile>
-    
-  </mat-grid-list>
-  <div class="loading-indicator"  *ngIf="showSpinner">
-    <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
   </div>
   
+  <br>
+  <br>
+  <!-- <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+      
+    <button  mat-button (click)="btnClickNewHire();" color="primary">New Hire / No ID Number Yet?</button>
+        
+  </div> -->
+  <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+    <div class="loading-indicator"  *ngIf="showSpinner">
+      <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+    </div>
+  </div>
 </ng-container>
 

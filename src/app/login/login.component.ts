@@ -56,34 +56,12 @@ export class LoginComponent implements OnInit {
     
     this.submitted = true;
 
-    this.detailsService.getDetails(this.id, this.tin, moment(this.db).format('L'))
+    // this.detailsService.getDetails(this.id, this.tin, moment(this.db).format('L'))
+    this.detailsService.getDetails(this.id, moment(this.db).format('L'))
     .subscribe(data => {
       
-      // if(data !== 'Invalid login') {
-      //   console.log('first');
-      //   let navigationExtras: NavigationExtras = {
-      //     queryParams: data[0] 
-      //   }
-      //   this.router.navigate(['personalInfo'], navigationExtras);
-      //   this.submitted = false;
-
-      // } 
-      // else if(data !== 'Invalid Data') {
-      //   console.log('second');
-      //   let navigationExtras: NavigationExtras = {
-      //     queryParams: data[0] 
-      //   }
-      //   this.router.navigate(['personalInfo'], navigationExtras);
-      //   this.submitted = false;
-      // }
-      // else {
-      //   this.openDialog('Invalid login');
-      //   this.submitted = false;
-      //   return;
-      // }
-
       if(data == 'Invalid login' ||  data == 'Invalid Data') {
-        this.openDialog('Invalid login');
+        this.openDialog('Invalid Login / No Record Found');
         this.submitted = false;
         return;
       }
@@ -94,8 +72,6 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['personalInfo'], navigationExtras);
         this.submitted = false;
       }
-
-
     }, error => {
       this.error = error
       this.openDialog(error);
@@ -103,7 +79,17 @@ export class LoginComponent implements OnInit {
     });
   } 
 
+  btnClickNewHire() {
+    let navigationExtras: NavigationExtras = {
+      queryParams: []
+    }
+
+    this.router.navigate(['personalInfo'], navigationExtras);
+    this.submitted = false;
+  }
+
   openDialog(message): void {
+  
     const dialogConfig = new MatDialogConfig();
 
     // dialogConfig.disableClose = true;
@@ -117,7 +103,7 @@ export class LoginComponent implements OnInit {
       width: '250px'
     };
 
-    //this.dialog.open(DialogMessageComponent, dialogConfig);
+    // this.dialog.open(DialogMessageComponent, dialogConfig);
 
     const dialogRef = this.dialog.open(DialogMessageComponent, dialogConfig);
 

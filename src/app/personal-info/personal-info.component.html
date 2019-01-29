@@ -16,7 +16,7 @@
     
       
       <!-- ################# START BASIC INFORMATION ################# -->
-      <mat-grid-list cols="4" rowHeight="2:1">
+      <mat-grid-list cols="4" rowHeight="4:1">
         <mat-list-item>Contact Information</mat-list-item>
         <mat-divider></mat-divider>
         
@@ -46,14 +46,14 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input  matInput placeholder="Primary Mobile Number" formControlName="frmCtrlMobile1" (keyup)="dataChange($event)" required >
+              <input  matInput maxlength="11" placeholder="Primary Mobile Number (11 digits)" formControlName="frmCtrlMobile1" (keyup)="dataChange('mobile1', $event)" required >
             </mat-form-field>
           </div>
         </mat-grid-tile>
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Secondary Mobile Number" formControlName="frmCtrlMobile2">
+              <input matInput  maxlength="11" placeholder="Secondary Mobile Number (11 digits)" formControlName="frmCtrlMobile2" (keyup)="dataChange('mobile2', $event)">
             </mat-form-field>
           </div>
 
@@ -61,7 +61,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Landline Number" formControlName="frmCtrlLandline">
+              <input matInput maxlength="10" placeholder="Landline Number" formControlName="frmCtrlLandline" (keyup)="dataChange('landline', $event)">
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -98,7 +98,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Personal Email" formControlName="frmCtrlEmail">
+              <input matInput placeholder="Personal Email" formControlName="frmCtrlEmail" (keyup)="dataChange('email', $event)">
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -108,7 +108,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="Blood Type" formControlName="frmCtrlBloodType">
+              <mat-select placeholder="Blood Type" formControlName="frmCtrlBloodType" (selectionChange)="bloodTypeChange($event)">
                 <mat-option *ngFor="let b of bloodTypes" [value]="b.ID">{{b.BloodType}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -117,7 +117,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="Civil Status" formControlName="frmCtrlCivilStatus" required>
+              <mat-select placeholder="Civil Status" formControlName="frmCtrlCivilStatus" (selectionChange)="civilStatusChange($event)" required>
                 <mat-option *ngFor="let c of civilStatus" [value]="c.ID">{{c.CivilStatus}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -130,13 +130,16 @@
       <mat-grid-list cols="4" rowHeight="5:1">
         <mat-list-item>Address</mat-list-item>
         <mat-divider></mat-divider>
+        <mat-slide-toggle [checked]="toggleAddressChecked" (change)="toggleAddress($event)" >Present address the same as the Permanent address?</mat-slide-toggle>
 
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile>
-          <h4>Present Address</h4>
+          <!-- <h4>Present Address</h4> -->
+          <mat-list-item>Present Address</mat-list-item>
         </mat-grid-tile>
         <mat-grid-tile>
-          <h4>Permanent Address</h4>
+          <!-- <h4>Permanent Address</h4> -->
+          <mat-list-item>Permanent Address</mat-list-item>
         </mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
         
@@ -144,17 +147,17 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Street/Unit/Block/Lot Number" formControlName="frmCtrlAddress11"  (keyup)="add1Change($event)" required>
+              <input matInput maxlength="50" placeholder="Street/Unit/Block/Lot Number" formControlName="frmCtrlAddress11" [value]="add11" (keyup)="dataChange('add11', $event)" required>
             </mat-form-field>
           </div>
         </mat-grid-tile>
 
         <mat-grid-tile>
-            <div>
-              <mat-form-field>
-                <input matInput placeholder="Street/Unit/Block/Lot Number" formControlName="frmCtrlAddress21" required>
-              </mat-form-field>
-            </div>
+          <div>
+            <mat-form-field>
+              <input matInput maxlength="50" placeholder="Street/Unit/Block/Lot Number" formControlName="frmCtrlAddress21" [value]="add21" (keyup)="dataChange('add21', $event)" required>
+            </mat-form-field>
+          </div>
         </mat-grid-tile>
         <mat-grid-tile></mat-grid-tile>
 
@@ -162,7 +165,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Street/Unit Name" formControlName="frmCtrlAddress12" required>
+              <input matInput maxlength="50" placeholder="Street/Unit Name" formControlName="frmCtrlAddress12" [value]="add12" (keyup)="dataChange('add12', $event)" required>
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -170,7 +173,7 @@
         <mat-grid-tile>
             <div>
               <mat-form-field>
-                <input matInput placeholder="Street/Unit Name" formControlName="frmCtrlAddress22" required>
+                <input matInput maxlength="50" placeholder="Street/Unit Name" formControlName="frmCtrlAddress22" [value]="add22" (keyup)="dataChange('add22', $event)" required>
               </mat-form-field>
             </div>
         </mat-grid-tile>
@@ -180,7 +183,7 @@
         <mat-grid-tile>
             <div>
               <mat-form-field>
-                <input matInput placeholder="Subdivision/Block Name" formControlName="frmCtrlAddress13" required>
+                <input matInput maxlength="50" placeholder="Subdivision/Block Name" formControlName="frmCtrlAddress13" [value]="add13" (keyup)="dataChange('add13', $event)" required>
               </mat-form-field>
             </div>
           </mat-grid-tile>
@@ -188,7 +191,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Subdivision/Block Name" formControlName="frmCtrlAddress23" required>
+              <input matInput maxlength="50" placeholder="Subdivision/Block Name" formControlName="frmCtrlAddress23" [value]="add23" (keyup)="dataChange('add23', $event)" required>
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -221,7 +224,6 @@
           <div>
             <mat-form-field>
               <mat-select placeholder="Postal Address" formControlName="frmCtrlPostalAdd1" (selectionChange)="postalChange1($event)">
-
                 <mat-option *ngFor="let p of postalAdd1" [value]="p.ID">{{p.Details}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -244,16 +246,17 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="Structure Type" formControlName="frmCtrlStructure1">
+              <mat-select placeholder="Structure Type" formControlName="frmCtrlStructure1" (selectionChange)="structureChange1($event)">
                 <mat-option *ngFor="let s of structureType1" [value]="s.ID">{{s.Description}}</mat-option>
               </mat-select>
             </mat-form-field>
+           
           </div>
         </mat-grid-tile>
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="Structure Type" formControlName="frmCtrlStructure2">
+              <mat-select placeholder="Structure Type" formControlName="frmCtrlStructure2" (selectionChange)="structureChange2($event)">
                 <mat-option *ngFor="let s of structureType2" [value]="s.ID">{{s.Description}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -267,7 +270,7 @@
       <mat-grid-tile>
         <div>
           <mat-form-field>
-            <mat-select placeholder="Ownership Type" formControlName="frmCtrlOwnershipType1">
+            <mat-select placeholder="Ownership Type" formControlName="frmCtrlOwnershipType1" (selectionChange)="ownershipTypeChange1($event)">
               <mat-option *ngFor="let o of ownershipType1" [value]="o.ID">{{o.Description}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -276,7 +279,7 @@
       <mat-grid-tile>
         <div>
           <mat-form-field>
-            <mat-select placeholder="Ownership Type" formControlName="frmCtrlOwnershipType2">
+            <mat-select placeholder="Ownership Type" formControlName="frmCtrlOwnershipType2" (selectionChange)="ownershipTypeChange2($event)">
               <mat-option *ngFor="let o of ownershipType2" [value]="o.ID">{{o.Description}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -297,7 +300,8 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Name (Lastname, Firstname Middlename)" formControlName="frmCtrlContactFullname" required>
+              <input matInput maxlength="150" placeholder="Name (Lastname, Firstname Middlename)" formControlName="frmCtrlContactFullname" (keyup)="dataChange('contactPerson', $event)" required>
+                
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -305,7 +309,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Mobile Number" formControlName="frmCtrlContactMobile" required>
+              <input matInput maxlength="11"  placeholder="Mobile Number (11 digits)" formControlName="frmCtrlContactMobile" (keyup)="dataChange('contactMobile', $event)"  required>
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -313,7 +317,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput placeholder="Landline" formControlName="frmCtrlContactLandline">
+              <input matInput maxlength="10" placeholder="Landline" formControlName="frmCtrlContactLandline" (keyup)="dataChange('contactLandline', $event)">
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -321,7 +325,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="Relationship" formControlName="frmCtrlContactRelationship" required>
+              <mat-select placeholder="Relationship" formControlName="frmCtrlContactRelationship" (selectionChange)="contactRelationshipChange($event)" required>
                 <mat-option *ngFor="let c of contactRelationship" [value]="c.ID">{{c.FamilyRelationship}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -343,147 +347,792 @@
     </form>
   </mat-step>
 
-  <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
+  <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Living Relatives Information</ng-template>
       
       <mat-list-item>Parents</mat-list-item>
       <mat-divider></mat-divider>
-      <button mat-icon-button color="primary">
+      <button mat-button color="primary" (click)="btnAddClick('parents')">
+        
+      <!-- <button mat-icon-button color="primary" (click)="openDialogSelectParent()"> -->
         <mat-icon>add</mat-icon>
+        Add New
       </button>
 
-      <table mat-table [dataSource]="parents" class="mat-elevation-z8">
-
-        <!-- <ng-container matColumnDef="MembershipID">
-          <th mat-header-cell *matHeaderCellDef> Type </th>
-          <td mat-cell *matCellDef="let element"> {{element.Membership}} </td>
-        </ng-container> -->
-    
-      
-        <ng-container matColumnDef="MembershipID">
-          <th mat-header-cell *matHeaderCellDef> Type </th>
-          <td mat-cell *matCellDef="let element; let index = index">
-            <mat-form-field floatLabel="never">
-              <mat-select  [(ngModel)]="element.MembershipID" [ngModelOptions]="{standalone: true}">
-                <mat-option *ngFor="let p of parents" [value]="p.MembershipID">{{p.Membership}}</mat-option>
-                
-              </mat-select>
-            </mat-form-field>
-          </td>
-        </ng-container>
-
-
-
-
-        <!-- <ng-container matColumnDef="LastName">
-          <th mat-header-cell *matHeaderCellDef> Last Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.LastName}} </td>
-        </ng-container> -->
-
-        
-
-        <ng-container matColumnDef="LastName">
-          <th mat-header-cell *matHeaderCellDef> Last Name </th>
-          <!-- <td mat-cell *matCellDef="let element"> {{element.LastName}} </td> -->
-
-          <td mat-cell *matCellDef="let element"> 
-            <mat-form-field floatLabel="never">
-              <input matInput placeholder="Last Name" [value]="element.LastName">
-            </mat-form-field>
-          </td>
-        </ng-container>
-
-        <!-- <ng-container matColumnDef="FirstName">
-          <th mat-header-cell *matHeaderCellDef> First Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.FirstName}} </td>
-        </ng-container> -->
-
-
-        <ng-container matColumnDef="FirstName">
-          <th mat-header-cell *matHeaderCellDef> First Name </th>  
-          <td mat-cell *matCellDef="let element"> 
-            <mat-form-field floatLabel="never">
-              <input matInput placeholder="First Name" [value]="element.FirstName">
-            </mat-form-field>
-          </td>
-        </ng-container>
-
-
-        <!-- <ng-container matColumnDef="MiddleName">
-          <th mat-header-cell *matHeaderCellDef> Middle Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.MiddleName}} </td>
-        </ng-container> -->
-
-        <ng-container matColumnDef="MiddleName">
-          <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field floatLabel="never">
-              <input matInput placeholder="Middle Name" [value]="element.MiddleName">
-            </mat-form-field>
-          </td>
-        </ng-container>
-
-        <!-- <ng-container matColumnDef="BirthDate">
-          <th mat-header-cell *matHeaderCellDef> Birth Date </th>
-          <td mat-cell *matCellDef="let element"> {{element.BirthDate | date:'MM/dd/yyyy'}} </td>
-        </ng-container> -->
-
-        <ng-container matColumnDef="BirthDate">
-          <th mat-header-cell *matHeaderCellDef> Birth Date </th>
-          <td mat-cell *matCellDef="let element">
+      <div [hidden]="parents.length == 0">
+        <table *ngIf="parents.length !==0" mat-table [dataSource]="dataSourceParents" class="mat-elevation-z8" >
+          
+          <ng-container matColumnDef="Membership">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element; let i index">
               <mat-form-field floatLabel="never">
-                  <input matInput placeholder="MM/DD/YYYY" [value]="element.BirthDate | date:'MM/dd/yyyy'">
+                <!-- <mat-select [(ngModel)]="element.Membership" [ngModelOptions]="{standalone: true}" (click)="parentClick($event)" (onSelectionChange)="parentChange($event)">
+                  <mat-option *ngFor="let p of parentTypes" [value]="p.Membership">{{p.Membership}}</mat-option>
+                </mat-select> -->
+                <input matInput placeholder="Parent" [value]="element.Membership" readonly>
               </mat-form-field>
-          </td>
-        </ng-container>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="LastName">
+            <th mat-header-cell *matHeaderCellDef> Last Name </th>
+            
+            <td mat-cell *matCellDef="let element; let i = index"> 
+              <mat-form-field floatLabel="never">
+          
+                <input matInput  placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('parentsLastName', i, $event)" required>  
+                
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="FirstName">
+            <th mat-header-cell *matHeaderCellDef> First Name </th>  
+            <td mat-cell *matCellDef="let element; let i = index"> 
+              <mat-form-field floatLabel="never">
+                <input matInput  placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('parentsFirstName', i, $event)" required>
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="MiddleName">
+            <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('parentsMiddleName', i, $event)" required>
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="BirthDate">
+            <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('parentsBirthDate', i, $event)" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </ng-container>
 
-        
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="primary" (click)="btnDeleteClick('parents', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-        <!-- <ng-container matColumnDef="Edit">
-          <th mat-header-cell *matHeaderCellDef>Edit</th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-        </ng-container> -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></tr>
 
-        <ng-container matColumnDef="Delete">
-          <th mat-header-cell *matHeaderCellDef>Delete</th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" (click)="btnDeleteClick(element);">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-        
-      </table>
+        </table>
+      </div>
      
+     <!-- **************************** SIBLINGS ************************** -->
       <mat-list-item>Siblings</mat-list-item>
       <mat-divider></mat-divider>
 
-      <button mat-icon-button color="primary">
+      <button mat-button color="primary" (click)="btnAddClick('siblings')">
+        
         <mat-icon>add</mat-icon>
+        Add New
       </button>
+
+      <div  [hidden]="siblings.length == 0">
+        <table  *ngIf="siblings.length !==0" mat-table [dataSource]="dataSourceSiblings" class="mat-elevation-z8" >
+          <ng-container matColumnDef="Membership">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <!-- <mat-select [(ngModel)]="element.Membership" [ngModelOptions]="{standalone: true}" (click)="parentClick($event)" (onSelectionChange)="parentChange($event)">
+                  <mat-option *ngFor="let p of parentTypes" [value]="p.Membership">{{p.Membership}}</mat-option>
+                  
+                </mat-select> -->
+                <input matInput placeholder="Siblings" [value]="element.Membership" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="LastName">
+            <th mat-header-cell *matHeaderCellDef> Last Name </th>
+            <!-- <td mat-cell *matCellDef="let element"> {{element.LastName}} </td> -->
+  
+            <td mat-cell *matCellDef="let element; let i = index"> 
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('siblingsLastName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="FirstName">
+            <th mat-header-cell *matHeaderCellDef> First Name </th>  
+            <td mat-cell *matCellDef="let element; let i = index"> 
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('siblingsFirstName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="MiddleName">
+            <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('siblingsMiddleName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="BirthDate">
+            <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field floatLabel="never">
+                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('siblingsBirthDate', i, $event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+  
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="primary" (click)="btnDeleteClick('siblings', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+          
+        </table>
+      </div>
+
+
+      <!-- **************************** SPOUSE ************************** -->
 
       <mat-list-item>Spouse</mat-list-item>
       <mat-divider></mat-divider>
-      <button mat-icon-button color="primary">
+      <button mat-button color="primary" (click)="btnAddClick('spouse')">
+        
         <mat-icon>add</mat-icon>
+        Add New
       </button>
+
+      <div [hidden]="spouse.length == 0">
+        <table   *ngIf="spouse.length !==0" mat-table [dataSource]="dataSourceSpouse" class="mat-elevation-z8" >
+          <ng-container matColumnDef="Membership">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <!-- <mat-select [(ngModel)]="element.Membership" [ngModelOptions]="{standalone: true}" (click)="parentClick($event)" (onSelectionChange)="parentChange($event)">
+                  <mat-option *ngFor="let p of parentTypes" [value]="p.Membership">{{p.Membership}}</mat-option>
+                  
+                </mat-select> -->
+                <input matInput placeholder="Spouse" [value]="element.Membership" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="LastName">
+            <th mat-header-cell *matHeaderCellDef> Last Name </th>
+            <!-- <td mat-cell *matCellDef="let element"> {{element.LastName}} </td> -->
+  
+            <td mat-cell *matCellDef="let element; let i = index"> 
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('spouseLastName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="FirstName">
+            <th mat-header-cell *matHeaderCellDef> First Name </th>  
+            <td mat-cell *matCellDef="let element; let i = index"> 
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('spouseFirstName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="MiddleName">
+            <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('spouseMiddleName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="BirthDate">
+            <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field floatLabel="never">
+                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('spouseBirthDate', i, $event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+  
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="primary" (click)="btnDeleteClick('spouse', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+          
+        </table>
+      </div>
+
+
+
+      <!-- **************************** CHILD ************************** -->
 
       <mat-list-item>Child/Children</mat-list-item>
       <mat-divider></mat-divider>
-      <button mat-icon-button color="primary">
+      <button mat-button color="primary" (click)="btnAddClick('child')">
+          
         <mat-icon>add</mat-icon>
+        Add New
       </button>
 
+      <div [hidden]="child.length == 0">
+        <table   *ngIf="child.length !==0" mat-table [dataSource]="dataSourceChild" class="mat-elevation-z8" >
+          <ng-container matColumnDef="Membership">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <!-- <mat-select [(ngModel)]="element.Membership" [ngModelOptions]="{standalone: true}" (click)="parentClick($event)" (onSelectionChange)="parentChange($event)">
+                  <mat-option *ngFor="let p of parentTypes" [value]="p.Membership">{{p.Membership}}</mat-option>
+                  
+                </mat-select> -->
+                <input matInput placeholder="Type" [value]="element.Membership" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="LastName">
+            <th mat-header-cell *matHeaderCellDef> Last Name </th>
+            <!-- <td mat-cell *matCellDef="let element"> {{element.LastName}} </td> -->
+  
+            <td mat-cell *matCellDef="let element; let i = index"> 
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('childLastName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="FirstName">
+            <th mat-header-cell *matHeaderCellDef> First Name </th>  
+            <td mat-cell *matCellDef="let element; let i = index"> 
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('childFirstName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="MiddleName">
+            <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('childMiddleName', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="BirthDate">
+            <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field floatLabel="never">
+                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('childBirthDate', i, $event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+  
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="primary" (click)="btnDeleteClick('child', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+          
+        </table>
+      </div>
+
+
+
+
+      <div class="fab-containerPrev">
+        <button mat-fab matStepperPrevious>Back</button>
+      </div>
+
+      <div class="fab-containerNext">
+        <button mat-fab matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Education / Skills</ng-template>
+      <!-- <mat-form-field> -->
+        <!-- <input matInput placeholder="School Attended" formControlName="thirdCtrl" required> -->
+        <!-- <mat-list-item>Education</mat-list-item> -->
+        <!-- <h3>Education</h3> -->
+        <mat-list-item>Education</mat-list-item>
+        <mat-divider></mat-divider>
+        <button mat-button color="primary" (click)="btnAddClick('education')">
+          <mat-icon>add</mat-icon>
+          Add New
+        </button>
+
+        <div [hidden]="educationDetails.length == 0">
+          <table *ngIf="educationDetails.length !== 0" mat-table [dataSource]="dataSourceEducationDetails" class="mat-elevation-z8"  >
+            
+            <ng-container matColumnDef="LevelOfEducation">
+                <th mat-header-cell *matHeaderCellDef> Level </th>
+                <td mat-cell *matCellDef="let element">    
+                  <mat-form-field class="customMatFormFieldDate" floatLabel="never">
+                    <input matInput placeholder="Level" [value]="element.LevelOfEducation" readonly>
+                  </mat-form-field>
+                </td>
+  
+            </ng-container>
+          
+            <ng-container matColumnDef="Level">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormFieldDate" floatLabel="never">
+                  <input matInput placeholder="Level" [value]="element.Level" readonly>
+                </mat-form-field>
+              </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="SchoolName">
+              <th mat-header-cell *matHeaderCellDef> School </th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field floatLabel="never">
+                  <input matInput placeholder="School Name" [value]="element.SchoolName" (keyup)="updateEducationSkills('schoolName', i, $event)" [matAutocomplete]="auto">
+                </mat-form-field>
+
+                <mat-autocomplete  #auto="matAutocomplete">
+                  <mat-option class="mat-option-customize" *ngFor="let option of optionsSchools" [value]="option.Name" (onSelectionChange)="optionSelectedSchool(i, option.Name)">{{ option.Name }}</mat-option>
+                </mat-autocomplete>
+              </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="ProgramDegree">
+              <th mat-header-cell *matHeaderCellDef> Degree </th>  
+              <td mat-cell *matCellDef="let element; let i = index"> 
+                <mat-form-field floatLabel="never">
+                  <input matInput placeholder="Program/Degree" [value]="element.ProgramDegree" (keyup)="updateEducationSkills('programDegree', i, $event)">
+                </mat-form-field>
+              </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="SchoolAddress">
+              <th mat-header-cell *matHeaderCellDef> Location </th>  
+              <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput placeholder="Location" [value]="element.SchoolAddress" (keyup)="updateEducationSkills('schoolAddress', i, $event)">
+                </mat-form-field>
+
+              </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="YearStarted">
+              <th mat-header-cell *matHeaderCellDef> Start Year </th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                  <mat-form-field class="customMatFormFieldDate" floatLabel="never">
+                    <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.YearStarted" (dateChange)="updateEducationSkills('yearStarted', i, $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="YearEnded">
+              <th mat-header-cell *matHeaderCellDef> End Year </th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                  <mat-form-field class="customMatFormFieldDate" floatLabel="never">
+                    <!-- <input matInput  placeholder="YYYY" [value]="element.YearEnded | date:'yyyy'"> -->
+                    <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.YearEnded" (dateChange)="updateEducationSkills('yearEnded', i, $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+              </td>
+            </ng-container>
+  
+    
+            <ng-container matColumnDef="Delete">
+              <th mat-header-cell *matHeaderCellDef>Delete</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                <button mat-icon-button color="primary" (click)="btnDeleteClick('education', element, i);">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+    
+            
+            <tr  mat-header-row *matHeaderRowDef="displayedColumnsEducation"></tr>
+            <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsEducation;"></tr>
+          </table>
+        </div>
+
+        <!-- *****************************************PRC LICENSES********************************** -->
+
+      <!-- <h3>PRC License</h3> -->
+      <mat-list-item>PRC License</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-grid-list cols="3" rowHeight="5:1">
+        <!-- *****************************LICENSE 1**************************** -->
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+            <mat-select placeholder="License Type" formControlName="frmCtrlPRCtype1" (selectionChange)="PRC1TypeChange($event)">
+              <mat-option *ngFor="let p of prcTypes" [value]="p.ID">{{p.PRCType}}</mat-option>
+            </mat-select>
+
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input  matInput placeholder="PRC License Number" formControlName="frmCtrlPRClicense1" (keyup)="updatePRClicense('prc1Update', $event)">
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <!-- <input matInput placeholder="Expiration Date MM/DD/YYYY" formControlName="frmCtrlExpDate2> -->
+              <input matInput [matDatepicker]="picker1" placeholder="MM/DD/YYYY"  [value]="strPRCExpiryDate1" (dateChange)="updatePRClicense('ExpDate1', $event)" required>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        <!-- *****************************LICENSE 2**************************** -->
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <mat-select placeholder="License Type" formControlName="frmCtrlPRCtype2" (selectionChange)="PRC2TypeChange($event)">
+                <mat-option *ngFor="let p of prcTypes" [value]="p.ID">{{p.PRCType}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input  matInput placeholder="PRC License Number 2" formControlName="frmCtrlPRClicense2" (keyup)="updatePRClicense('prc2Update', $event)">
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <!-- <input matInput placeholder="Expiration Date MM/DD/YYYY" formControlName="frmCtrlExpDate2"> -->
+              <input matInput [matDatepicker]="picker2" placeholder="MM/DD/YYYY" [value]="strPRCExpiryDate2" (dateChange)="updatePRClicense('ExpDate2', $event)" required>
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <!-- *************************LANGUAGE************************ -->
+
+      <!-- <h3>Language</h3> -->
+      <mat-list-item>Language</mat-list-item>
+      <mat-divider></mat-divider>
+      <br>
+      Foreign (Aside from English)
+      
+      <button mat-button color="primary" (click)="btnAddClick('foreignLanguage')">
+          
+        <mat-icon>add</mat-icon>
+        Add New
+      </button>
+
+      <div  [hidden]="foreignLanguageSkills.length == 0">
+        <table *ngIf="foreignLanguageSkills.length !== 0" mat-table [dataSource]="dataSourceForeignLanguageSkills" class="mat-elevation-z8" >
+          <ng-container matColumnDef="LanguageDialect">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <!-- <mat-select placeholder="Language" formControlName="frmCtrlCivilStatus" required>
+                  <mat-option *ngFor="let c of civilStatus" [value]="c.ID">{{c.CivilStatus}}</mat-option>
+                </mat-select> -->
+                <input matInput placeholder="Language" [value]="element.LanguageDialect" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Knowledge">
+            <th mat-header-cell *matHeaderCellDef> Level </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.Knowledge" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WithFormalEducation">
+            <th mat-header-cell *matHeaderCellDef> With formal education </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput  [value]="element.WithFormalEducation" readonly>
+                  
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WithCertificate">
+            <th mat-header-cell *matHeaderCellDef> With certification </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField"  floatLabel="never">
+                  <input matInput [value]="element.WithCertificate" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="LanguageSkillLevel">
+            <th mat-header-cell *matHeaderCellDef>Skill Level</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput [value]="element.LanguageSkillLevel" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WillingIfNeeded">
+            <th mat-header-cell *matHeaderCellDef>Willing to serve as interpreter</th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field  class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.WillingIfNeeded" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+  
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="primary" (click)="btnDeleteClick('foreignLanguage', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+  
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsLanguage"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsLanguage;"></tr>
+  
+          
+        </table>
+      </div>
+
+      <br>
+      Local (Aside from Tagalog)
+  
+      <button mat-button color="primary" (click)="btnAddClick('localLanguage')">
+          
+        <mat-icon>add</mat-icon>
+        Add New
+      </button>
+
+      <div  [hidden]="localLanguageSkills.length == 0">
+        <table *ngIf="localLanguageSkills.length !== 0" mat-table [dataSource]="dataSourceLocalLanguageSkills" class="mat-elevation-z8" >
+          <ng-container matColumnDef="LanguageDialect">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput placeholder="Language" [value]="element.LanguageDialect" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Knowledge">
+            <th mat-header-cell *matHeaderCellDef> Level </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput class="customMatFormField"  [value]="element.Knowledge" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="WithFormalEducation">
+            <th mat-header-cell *matHeaderCellDef> With formal education </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput  [value]="element.WithFormalEducation" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WithCertificate">
+            <th mat-header-cell *matHeaderCellDef> With certification </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput  [value]="element.WithCertificate" readonly>
+                  
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="LanguageSkillLevel">
+            <th mat-header-cell *matHeaderCellDef>Skill Level</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput  [value]="element.LanguageSkillLevel" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WillingIfNeeded">
+            <th mat-header-cell *matHeaderCellDef>Willing to serve as interpreter </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput  [value]="element.WillingIfNeeded" readonly>
+                
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="primary" (click)="btnDeleteClick('localLanguage', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+  
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsLanguage"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsLanguage;"></tr>
+  
+          
+        </table>
+      </div>
+      
+      <p>Language Knowledge Levels</p>
+      <em><strong>Basic</strong> (can carry simple conversations)</em>
+      <br>
+      <em><strong>Intermediate</strong> (understands and responds to complex and lengthy conversations)</em>
+      <br>
+      <em><strong>Advanced</strong> (understands the structural rules and has wide vocabulary of the language)</em>
+      <br>
+      <!-- <mat-divider></mat-divider> -->
+      <br>
+      <br>
+      <!-- <h3>Skills</h3> -->
+      <mat-list-item>Sign Language / Braille System</mat-list-item>
+      <mat-divider></mat-divider>
+
+      <mat-grid-list cols="2" rowHeight="7:1">
+        
+
+        <mat-grid-tile>
+          <section class="example-section">
+            <mat-checkbox [checked]="signLanguage" (change)="changeSkillsValue('signLanguage', $event)">Sign Language</mat-checkbox>
+          </section>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-radio-group [disabled]="disabledSignLanguage" >
+            <mat-radio-button [checked]="signLanguageLevel1" style="padding-left: 20px"  (change)="selectedSkillsRadioChange('signLanguage', $event)" value="Basic">Basic</mat-radio-button>
+            <mat-radio-button [checked]="signLanguageLevel2" style="padding-left: 20px"  (change)="selectedSkillsRadioChange('signLanguage', $event)" value="Intermediate">Intermediate</mat-radio-button>
+            <mat-radio-button [checked]="signLanguageLevel3" style="padding-left: 20px"  (change)="selectedSkillsRadioChange('signLanguage', $event)" value="Advanced">Advanced</mat-radio-button>
+          </mat-radio-group>
+        </mat-grid-tile>
+
+      
+
+        <mat-grid-tile>
+          <section class="example-section">
+            <mat-checkbox [checked]="this.brailleSystem" (change)="changeSkillsValue('brailleSystem', $event)">Braille System</mat-checkbox>
+          </section>
+        </mat-grid-tile>
+        
+        <mat-grid-tile>
+          <mat-radio-group [disabled]="disabledBraille" >
+            <mat-radio-button [checked]="brailleLevel1" style="padding-left: 20px" (change)="selectedSkillsRadioChange('brailleSystem', $event)" value="Basic">Basic</mat-radio-button>
+            <mat-radio-button [checked]="brailleLevel2" style="padding-left: 20px" (change)="selectedSkillsRadioChange('brailleSystem', $event)" value="Intermediate">Intermediate</mat-radio-button>
+            <mat-radio-button [checked]="brailleLevel3" style="padding-left: 20px" (change)="selectedSkillsRadioChange('brailleSystem', $event)" value="Advanced">Advanced</mat-radio-button>
+          </mat-radio-group>
+        </mat-grid-tile>
+     
+
+      </mat-grid-list>
+      
+      <p>Sign Language/Braille System Knowledge Levels</p>
+      <em><strong>Basic</strong> (understands and expresses main ideas and some facts from interactive exchanges and simple connected texts) </em>
+      <br>
+      <em><strong>Intermediate</strong> (understands and expresses main ideas and most details of connected discourse on a variety of topics beyond the immediacy of the situation, including some topics where comprehension is complicated due to an unexpected sequence of events.)</em>
+      <br>
+      <em><strong>Advanced</strong> (understands and expresses concrete and abstract topics in extended discourse offered by persons using native-like discourse strategies.)</em>
+      <br>
+      <!-- <mat-divider></mat-divider> -->
+      <br>
+      <br>
+      <mat-list-item>Mobile phone number sharing consent</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-grid-list cols="1" rowHeight="9:1">
+        
+        <mat-grid-tile>
+            
+          <h3>
+            If off-duty, may we share your mobile phone number with the MakatiMed Medical Concierge, Call Center and concerned line head in case we need translating services?
+          </h3>
+            
+        </mat-grid-tile>
+         
+        <mat-grid-tile>
+          
+          <mat-checkbox [disabled]="disabledConsentSkillsAgreed" [(ngModel)]="skillsAgreed" [ngModelOptions]="{standalone: true}" (change)="changeSkillsValue('skillsAgreed', $event)" >
+            I Agree
+          </mat-checkbox>
+           
+        </mat-grid-tile>
+       
+      </mat-grid-list>
+ 
       <div class="fab-containerPrev">
         <button mat-fab matStepperPrevious>Back</button>
       </div>
@@ -493,89 +1142,1056 @@
     </form>
   </mat-step>
 
-  <mat-step [stepControl]="thirdFormGroup" [optional]="isOptional">
-    <form [formGroup]="thirdFormGroup">
-      <ng-template matStepLabel>Education / Skills</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="School Attended" formControlName="thirdCtrl" required>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+  <mat-step>
+    <ng-template matStepLabel>Declaration of Outside Interest / Employment</ng-template>
+    <mat-list-item>Declaration of Outside Interests / Employment</mat-list-item>
+    <mat-divider></mat-divider>
+    
+    <p>
+        Please be reminded that outside interests and employment include, but are not limited to: serving as a director, trustee, officer, or employee of any entity; serving as a consultant to any entity; and/or being a partner or owner of any entity (in all cases, regardless of whether any compensation of any form is received).
+
+        For more information, you may read the Policy on Declaration of Outside Interests or Employment found in the WHaM.
+        
+    </p>
+    <p>Do you have outside interests and/or employment to declare?</p>
+    <!-- <mat-radio-group>
+
+        <mat-radio-button style="padding: 5px" value="1">Yes</mat-radio-button>
+  
+        <mat-radio-button style="padding: 5px"  value="2">No</mat-radio-button>
+
+    </mat-radio-group> -->
+
+    <mat-radio-group>
+      <mat-radio-button style="padding: 5px" *ngFor="let interest of selectedOutsideInterest" 
+      [checked]="interest.checked" [value]="interest.value" (change)="selectedOutsideInterestRadioChange($event)" required>{{interest.name}}</mat-radio-button>
+    </mat-radio-group>
+    <!-- <p>For those with outside interests and/or employment to declare, proceed below. For those without outside interests and/or employment to declare, proceed to the next portion.</p> -->
+    <br>
+   
+    <!-- <mat-grid-list cols="1" rowHeight="7:1">
+      
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile>
+        <h3>DECLARATION OF OUTSIDE INTERESTS OR EMPLOYMENT</h3>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        
+
+
+      </mat-grid-tile>
+      <mat-grid-tile></mat-grid-tile>
+
+    </mat-grid-list> -->
+
+    <div [hidden]="hideDeclaredOutsideInterest === true">
+      <button  mat-button color="primary" (click)="btnAddClick('declaredOutsideInterest')">
+        <mat-icon>add</mat-icon>
+        Add New
+      </button>
+        <table *ngIf="declaredOutsideInterest.length !== 0" mat-table [dataSource]="dataSourceDeclaredOutsideInterest" class="mat-elevation-z8" >
+          <ng-container matColumnDef="EntityName">
+            <th mat-header-cell *matHeaderCellDef> Entity Name </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <!-- <mat-select placeholder="Language" formControlName="frmCtrlCivilStatus" required>
+                  <mat-option *ngFor="let c of civilStatus" [value]="c.ID">{{c.CivilStatus}}</mat-option>
+                </mat-select> -->
+
+
+                <input matInput placeholder="Entity Name" [value]="element.EntityName" (keyup)="updateDeclarationInterest('nameOfEntity', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="NatureOfBusiness">
+            <th mat-header-cell *matHeaderCellDef> Nature of Entity </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field floatLabel="never">
+                  <input matInput placeholder="Nature of Entity" [value]="element.NatureOfBusiness" (keyup)="updateDeclarationInterest('natureOfEntity', i, $event)">
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> Position </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Position" [value]="element.Position" (keyup)="updateDeclarationInterest('position', i, $event)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="DateJoined">
+            <th mat-header-cell *matHeaderCellDef> Date Joined / Remarks </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field floatLabel="never">
+                  <input matInput placeholder="Date Joined / Remarks" [value]="element.DateJoined" (keyup)="updateDeclarationInterest('dateJoined', i, $event)">
+                  <!-- <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.DateJoined" (dateChange)="updateDeclarationInterest('dateJoined', i, $event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker> -->
+                </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="primary" (click)="btnDeleteClick('outsideInterest', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+  
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsDeclaredOutsideInterest"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsDeclaredOutsideInterest;"></tr>
+  
+          
+        </table>
       </div>
-    </form>
+
+
+
+    <div class="fab-containerPrev">
+      <button mat-fab matStepperPrevious>Back</button>
+    </div>
+    <div class="fab-containerNext">
+      <button mat-fab matStepperNext>Next</button>
+    </div>
+
   </mat-step>
 
   <mat-step>
-      <ng-template matStepLabel>Declaration of Outside Interest</ng-template>
-      <!-- You are now done. -->
-      <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-      </div>
-    </mat-step>
-
-  <mat-step  [optional]="isOptional">
     
-      <ng-template matStepLabel>Review Information</ng-template>
+    <ng-template matStepLabel>Review Data</ng-template>
+    <div>
+      <h3>
+        Review Data
+      </h3>
+    </div>
+    <mat-list-item>Contact Information</mat-list-item>
+    <mat-divider></mat-divider>
+    <form [formGroup]="firstFormGroup" >
+      <mat-grid-list cols="4" rowHeight="4:1">
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input  matInput placeholder="Primary Mobile Number" formControlName="frmCtrlMobile1"  readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input  matInput placeholder="Secondary Mobile Number" formControlName="frmCtrlMobile2" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Landline Number" formControlName="frmCtrlLandline" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Personal Email" formControlName="frmCtrlEmail" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
       
-      <!-- <mat-list-item>Address</mat-list-item>
-      <mat-divider></mat-divider> -->
-      <mat-grid-list cols="2">
-          <mat-grid-tile class="mat-grid-tile-custom">
-            <mat-card>
-              <mat-card-title>Present Address</mat-card-title>
-              <mat-divider></mat-divider>
-              <mat-card-content>
-                <mat-card-subtitle>Street/Unit/Block/Lot Number: </mat-card-subtitle>
-                
-                <h4>
-                  {{add11}}
-                </h4>
+        <mat-grid-tile></mat-grid-tile>
 
-                <mat-card-subtitle>Street/Unit Name: </mat-card-subtitle>
-                <h4>
-                  {{add12}}
-                </h4>
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <mat-select placeholder="Blood Type" formControlName="frmCtrlBloodType" [disabled]="true">
+                <mat-option *ngFor="let b of bloodTypes" [value]="b.ID" >{{b.BloodType}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <mat-select placeholder="Civil Status" formControlName="frmCtrlCivilStatus" [disabled]="true">
+                <mat-option *ngFor="let c of civilStatus" [value]="c.ID">{{c.CivilStatus}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
 
-                <mat-card-subtitle>Subdivision/Block Name: </mat-card-subtitle>
-                <h4>
-                  {{add13}}
-                </h4>
-                
-              </mat-card-content>
-            </mat-card>
-          </mat-grid-tile>
-
-          <mat-grid-tile class="mat-grid-tile-custom">
-            <mat-card>
-              <mat-card-title>Permanent Address</mat-card-title>
-              <mat-divider></mat-divider>
-              <mat-card-content>
-                <mat-card-subtitle>Street/Unit/Block/Lot Number: </mat-card-subtitle>
-                <h4>
-                  {{add21}}
-                </h4>
-
-                <mat-card-subtitle>Street/Unit Name: </mat-card-subtitle>
-                <h4>
-                  {{add22}}
-                </h4>
-
-                <mat-card-subtitle>Subdivision/Block Name: </mat-card-subtitle>
-                <h4>
-                  {{add23}}
-                </h4>
-
-              </mat-card-content>
-            </mat-card>
-          </mat-grid-tile>
-        
-        
+        <mat-grid-tile></mat-grid-tile>
 
       </mat-grid-list>
+    </form>
+
+    <mat-list-item>Present Address</mat-list-item>
+    <mat-divider></mat-divider>
+    <form [formGroup]="firstFormGroup" >
+      <mat-grid-list cols="5" rowHeight="3:1">
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Street/Unit/Block/Lot Number" [value]="add11" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
       
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Street/Unit Name" [value]="add12" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Subdivision/Block Name" [value]="add13" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="City" [value]="selectedCity1" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+                <input matInput placeholder="Postal Address" [value]="targetPostalCode1" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+              <mat-form-field>
+                <input matInput placeholder="Structure Type" [value]="targetStructureType1" readonly>
+              </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Owner Type" [value]="targetOwnershipType1" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+    </form>
+
+    <mat-list-item>Permanent Address</mat-list-item>
+    <mat-divider></mat-divider>
+    <form [formGroup]="firstFormGroup" >
+      <mat-grid-list cols="5" rowHeight="3:1">
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Street/Unit/Block/Lot Number" [value]="add21" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
       
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Street/Unit Name" [value]="add22" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Subdivision/Block Name" [value]="add23" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="City" [value]="selectedCity2" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Postal Address" [value]="targetPostalCode2" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Structure Type" [value]="targetStructureType2" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Owner Type" [value]="targetOwnershipType2" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+    </form>
+
+    <mat-list-item>Emergency Contact Person</mat-list-item>
+    <mat-divider></mat-divider>
+    <form [formGroup]="firstFormGroup" >
+      <mat-grid-list cols="4" rowHeight="3:1">
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Contact Person" [value]="contactFullname" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+      
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Mobile Number" [value]="contactMobile" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Landline Number" [value]="contactLandline" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Relationship" [value]="targetContactRelationship" readonly>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+     
+    <!--**************************** PARENTS **************************** -->
+    <mat-list-item>Living Family Members</mat-list-item>
+    <mat-divider></mat-divider>
+    <table *ngIf="parents.length !==0" mat-table [dataSource]="dataSourceParents" class="mat-elevation-z8" >
+        
+      <ng-container matColumnDef="Membership">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let element; let i index">
+          <mat-form-field floatLabel="never">
+          
+            <input matInput placeholder="Parent" [value]="element.Membership" readonly>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="LastName">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+      
+
+        <td mat-cell *matCellDef="let element; let i = index"> 
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Last Name" [value]="element.LastName" readonly>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="FirstName">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>  
+        <td mat-cell *matCellDef="let element; let i = index"> 
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="First Name" [value]="element.FirstName" readonly>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="MiddleName">
+        <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
+        <td mat-cell *matCellDef="let element; let i = index">
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Middle Name" [value]="element.MiddleName" readonly>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="BirthDate">
+        <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="MM/DD/YYYY" [value]="element.BirthDate | date: 'MM/dd/yyyy'" readonly>
+          </mat-form-field>
+          
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <!-- <button mat-icon-button color="primary" (click)="btnDeleteClick('parents', element, i)">
+            <mat-icon>delete</mat-icon>
+          </button> -->
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+    
+    <!--**************************** SIBLINGS **************************** -->
+    
+
+    <table *ngIf="siblings.length !==0" mat-table [dataSource]="dataSourceSiblings" class="mat-elevation-z8" >
+        
+      <ng-container matColumnDef="Membership">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let element; let i index">
+          <mat-form-field floatLabel="never">
+          
+            <input matInput placeholder="Siblings" [value]="element.Membership" readonly>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="LastName">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+      
+
+        <td mat-cell *matCellDef="let element; let i = index"> 
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Last Name" [value]="element.LastName" readonly>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="FirstName">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>  
+        <td mat-cell *matCellDef="let element; let i = index"> 
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="First Name" [value]="element.FirstName" readonly>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="MiddleName">
+        <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
+        <td mat-cell *matCellDef="let element; let i = index">
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Middle Name" [value]="element.MiddleName" readonly>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="BirthDate">
+        <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="MM/DD/YYYY" [value]="element.BirthDate | date: 'MM/dd/yyyy'" readonly>
+          </mat-form-field>
+          
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element; let i = index">
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      
+
+      <!--**************************** SPOUSE **************************** -->
+
+      <table *ngIf="spouse.length !==0" mat-table [dataSource]="dataSourceSpouse" class="mat-elevation-z8" >
+          
+        <ng-container matColumnDef="Membership">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element; let i index">
+            <mat-form-field floatLabel="never">
+            
+              <input matInput placeholder="Spouse" [value]="element.Membership" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="LastName">
+          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        
+
+          <td mat-cell *matCellDef="let element; let i = index"> 
+            <mat-form-field floatLabel="never">
+              <input matInput placeholder="Last Name" [value]="element.LastName" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="FirstName">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>  
+          <td mat-cell *matCellDef="let element; let i = index"> 
+            <mat-form-field floatLabel="never">
+              <input matInput placeholder="First Name" [value]="element.FirstName" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="MiddleName">
+          <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
+          <td mat-cell *matCellDef="let element; let i = index">
+            <mat-form-field floatLabel="never">
+              <input matInput placeholder="Middle Name" [value]="element.MiddleName" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="BirthDate">
+          <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <mat-form-field floatLabel="never">
+              <input matInput placeholder="MM/DD/YYYY" [value]="element.BirthDate | date: 'MM/dd/yyyy'" readonly>
+            </mat-form-field>
+            
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      
+      <!--**************************** SPOUSE **************************** -->
+
+
+      <table *ngIf="child.length !==0" mat-table [dataSource]="dataSourceChild" class="mat-elevation-z8" >
+    
+        <ng-container matColumnDef="Membership">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element; let i index">
+            <mat-form-field floatLabel="never">
+            
+              <input matInput placeholder="Child" [value]="element.Membership" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="LastName">
+          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        
+
+          <td mat-cell *matCellDef="let element; let i = index"> 
+            <mat-form-field floatLabel="never">
+              <input matInput placeholder="Last Name" [value]="element.LastName" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="FirstName">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>  
+          <td mat-cell *matCellDef="let element; let i = index"> 
+            <mat-form-field floatLabel="never">
+              <input matInput placeholder="First Name" [value]="element.FirstName" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="MiddleName">
+          <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
+          <td mat-cell *matCellDef="let element; let i = index">
+            <mat-form-field floatLabel="never">
+              <input matInput placeholder="Middle Name" [value]="element.MiddleName" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="BirthDate">
+          <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <mat-form-field >
+              <input matInput placeholder="MM/DD/YYYY" [value]="element.BirthDate | date: 'MM/dd/yyyy'" readonly>
+            </mat-form-field>
+            
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      
+      <!--**************************** EDUCATION **************************** -->
+
+      <mat-list-item>Education / Skills</mat-list-item>
+      <mat-divider></mat-divider>
+
+      <table *ngIf="educationDetails.length !==0" mat-table [dataSource]="dataSourceEducationDetails" class="mat-elevation-z8"  >
+        
+        <ng-container matColumnDef="LevelOfEducation">
+            <th mat-header-cell *matHeaderCellDef> Level </th>
+            <td mat-cell *matCellDef="let element">    
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput placeholder="Level" [value]="element.LevelOfEducation" readonly>
+                
+              </mat-form-field>
+            </td>
+
+        </ng-container>
+      
+        <ng-container matColumnDef="Level">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field class="customMatFormField" floatLabel="never">
+              <input matInput placeholder="Level" [value]="element.Level" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="SchoolName">
+          <th mat-header-cell *matHeaderCellDef> School </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <mat-form-field class="customMatFormField" floatLabel="never">
+              <input matInput placeholder="School Name" [value]="element.SchoolName" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ProgramDegree">
+          <th mat-header-cell *matHeaderCellDef> Degree </th>  
+          <td mat-cell *matCellDef="let element; let i = index"> 
+            <mat-form-field class="customMatFormField" floatLabel="never">
+              <input matInput placeholder="Program/Degree" [value]="element.ProgramDegree" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="SchoolAddress">
+          <th mat-header-cell *matHeaderCellDef> Location </th>  
+          <td mat-cell *matCellDef="let element; let i = index">
+            <mat-form-field class="customMatFormField" floatLabel="never">
+              <input matInput placeholder="Location" [value]="element.SchoolAddress" readonly>
+            </mat-form-field>
+
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="YearStarted">
+          <th mat-header-cell *matHeaderCellDef> Start Year </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <mat-form-field class="customMatFormFieldDate" floatLabel="never">
+              <input matInput placeholder="MM/DD/YYYY" [value]="element.YearStarted | date: 'MM/dd/yyyy'" readonly>
+              
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="YearEnded">
+          <th mat-header-cell *matHeaderCellDef> End Year </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <mat-form-field  class="customMatFormFieldDate"floatLabel="never">
+              <input matInput placeholder="MM/DD/YYYY" [value]="element.YearEnded | date: 'MM/dd/yyyy'" readonly>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+          </td>
+        </ng-container>
+
+        
+        <tr  mat-header-row *matHeaderRowDef="displayedColumnsEducation"></tr>
+        <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsEducation;"></tr>
+      </table>
+
+
+      <!--**************************** LICENSES **************************** -->
+      
+      <mat-list-item>PRC License</mat-list-item>
+      <mat-divider></mat-divider>
+      <form [formGroup]="thirdFormGroup" >
+        <mat-grid-list cols="3" rowHeight="5:1">
+  
+          <mat-grid-tile>
+            <div>
+              <mat-form-field>
+                <input  matInput placeholder="PRC License Type" [value]="targetPRCtype1" readonly>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+              <div>
+                <mat-form-field>
+                  <input  matInput placeholder="PRC License Number" [value]="strPRCNo1" readonly>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+      
+            <mat-grid-tile>
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="MM/DD/YYYY"  [value]="strPRCExpiryDate1 | date: 'MM/dd/yyyy'" readonly>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div>
+                <mat-form-field>
+                  <input  matInput placeholder="PRC License Type" [value]="targetPRCtype2" readonly>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+  
+            <mat-grid-tile>
+              <div>
+                <mat-form-field>
+                  <input  matInput placeholder="PRC License Number" [value]="strPRCNo2" readonly>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+      
+            <mat-grid-tile>
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="MM/DD/YYYY"  [value]="strPRCExpiryDate2 | date: 'MM/dd/yyyy'" readonly>
+                </mat-form-field>
+              </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+      
+          <!-- *************************LANGUAGE************************ -->
+
+      <!-- <h3>Language</h3> -->
+      <mat-list-item>Language</mat-list-item>
+      <mat-divider></mat-divider>
+
+      <div  [hidden]="foreignLanguageSkills.length == 0">
+        <p>
+          Foreign (Aside from English)
+        </p>
+        <table *ngIf="foreignLanguageSkills.length !== 0" mat-table [dataSource]="dataSourceForeignLanguageSkills" class="mat-elevation-z8" >
+          <ng-container matColumnDef="LanguageDialect">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput placeholder="Language" [value]="element.LanguageDialect" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Knowledge">
+            <th mat-header-cell *matHeaderCellDef> Level </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.Knowledge" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WithFormalEducation">
+            <th mat-header-cell *matHeaderCellDef> With formal education </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.WithFormalEducation" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WithCertificate">
+            <th mat-header-cell *matHeaderCellDef> With certification </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.WithCertificate" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="LanguageSkillLevel">
+            <th mat-header-cell *matHeaderCellDef>Skill Level</th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.LanguageSkillLevel" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WillingIfNeeded">
+            <th mat-header-cell *matHeaderCellDef>Willing to serve as interpreter</th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.WillingIfNeeded" readonly>
+                  
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+  
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <!-- <button mat-icon-button color="primary" (click)="btnDeleteClick('foreignLanguage', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button> -->
+            </td>
+          </ng-container>
+
+  
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsLanguage"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsLanguage;"></tr>
+  
+          
+        </table>
+      </div>
+
+      <br>
+
+      <div  [hidden]="localLanguageSkills.length == 0">
+        <p>
+          Local (Aside from Tagalog)
+        </p>
+        <table *ngIf="localLanguageSkills.length !== 0" mat-table [dataSource]="dataSourceLocalLanguageSkills" class="mat-elevation-z8" >
+          <ng-container matColumnDef="LanguageDialect">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput placeholder="Language" [value]="element.LanguageDialect" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Knowledge">
+            <th mat-header-cell *matHeaderCellDef> Level </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.Knowledge" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="WithFormalEducation">
+            <th mat-header-cell *matHeaderCellDef> With formal education </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.WithFormalEducation" readonly>
+                  
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WithCertificate">
+            <th mat-header-cell *matHeaderCellDef> With certification </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field class="customMatFormField" floatLabel="never">
+                  <input matInput [value]="element.WithCertificate" readonly>
+                  
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="LanguageSkillLevel">
+            <th mat-header-cell *matHeaderCellDef>Skill Level</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput [value]="element.LanguageSkillLevel" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="WillingIfNeeded">
+            <th mat-header-cell *matHeaderCellDef>Willing to serve as interpreter </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field class="customMatFormField" floatLabel="never">
+                <input matInput [value]="element.WillingIfNeeded" readonly>
+                
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <!-- <button mat-icon-button color="primary" (click)="btnDeleteClick('localLanguage', element, i);">
+                <mat-icon>delete</mat-icon>
+              </button> -->
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsLanguage"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsLanguage;"></tr>
+          
+        </table>
+      </div>
+      
+
+      <!-- <h3>Skills</h3> -->
+      <mat-list-item>Sign Language / Braille System</mat-list-item>
+      <mat-divider></mat-divider>
+      <!-- <mat-grid-list cols="2" rowHeight="6:1"> -->
+        
+        <!-- <mat-grid-tile></mat-grid-tile>
+        <mat-grid-tile>
+          <section class="example-section">
+            <mat-checkbox  [(ngModel)]="signLanguage" [ngModelOptions]="{standalone: true}" disabled>Sign Language</mat-checkbox>
+          </section>
+     
+         
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <section class="example-section">
+            <mat-checkbox [(ngModel)]="brailleSystem" [ngModelOptions]="{standalone: true}" disabled>Braille System</mat-checkbox>
+          </section>
+        </mat-grid-tile>
+        <mat-grid-tile></mat-grid-tile> -->
+
+        <mat-grid-list cols="2" rowHeight="7:1">
+        
+
+          <mat-grid-tile>
+            <section class="example-section">
+              <mat-checkbox [(ngModel)]="signLanguage" [ngModelOptions]="{standalone: true}" [disabled]="true" >Sign Language</mat-checkbox>
+            </section>
+          </mat-grid-tile>
+  
+          <mat-grid-tile>
+            <mat-radio-group  >
+              <p>{{selectedLevelSignLanguageDesc}}</p>
+            </mat-radio-group>
+          </mat-grid-tile>
+  
+        
+  
+          <mat-grid-tile>
+            <section class="example-section">
+              <mat-checkbox [(ngModel)]="brailleSystem" [ngModelOptions]="{standalone: true}" [disabled]="true">Braille System</mat-checkbox>
+            </section>
+          </mat-grid-tile>
+          
+          <mat-grid-tile>
+            <mat-radio-group  >
+              <p>{{selectedLevelBrailleSysDesc}}</p>
+            </mat-radio-group>
+          </mat-grid-tile>
+       
+  
+        <!-- </mat-grid-list> -->
+
+      </mat-grid-list>
+
+      <mat-list-item>Mobile phone number sharing consent</mat-list-item>
+      <mat-divider></mat-divider>
+      
+      <mat-grid-list cols="1" rowHeight="8:1">
+        
+        <mat-grid-tile>
+          <mat-checkbox [(ngModel)]="skillsAgreed" [ngModelOptions]="{standalone: true}" (change)="changeSkillsValue('skillsAgreed', $event)" [disabled]="true">
+            If off-duty, may we share your mobile phone number with the MakatiMed Medical Concierge, Call Center and concerned line head in case we need translating services?
+          </mat-checkbox>
+        </mat-grid-tile>
+       
+      </mat-grid-list>
+
+
+      
+      <mat-list-item>Declared Outside Interests / Employment</mat-list-item>
+      <mat-divider></mat-divider>
+
+      <div [hidden]="hideDeclaredOutsideInterest === true">
+        <table *ngIf="declaredOutsideInterest.length !== 0" mat-table [dataSource]="dataSourceDeclaredOutsideInterest" class="mat-elevation-z8" >
+          <ng-container matColumnDef="EntityName">
+            <th mat-header-cell *matHeaderCellDef> Entity Name </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Entity Name" [value]="element.EntityName" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="NatureOfBusiness">
+            <th mat-header-cell *matHeaderCellDef> Nature of Entity </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field floatLabel="never">
+                  <input matInput placeholder="Nature of Entity" [value]="element.NatureOfBusiness" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> Position </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field floatLabel="never">
+                <input matInput placeholder="Position" [value]="element.Position" readonly>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="DateJoined">
+            <th mat-header-cell *matHeaderCellDef> Date Joined / Remarks </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field floatLabel="never">
+                  <input matInput placeholder="Date Joined / Remarks" [value]="element.DateJoined" readonly>
+                </mat-form-field>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element; let i = index">
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsDeclaredOutsideInterest"></tr>
+          <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsDeclaredOutsideInterest;"></tr>
+  
+        </table>
+      </div>
+
       <!-- <div>
         <h3>
           LASTNAME: {{lastName}}
@@ -598,20 +2214,71 @@
             <input matInput placeholder="Middle name" formControlName="frmCtrlMname" >
           </mat-form-field>
         </div> -->
-      <div>
+      <!-- <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
+      </div> -->
+      <div class="fab-containerPrev">
+        <button mat-fab matStepperPrevious>Back</button>
+      </div>
+      <div class="fab-containerNext">
+        <button mat-fab matStepperNext>Next</button>
       </div>
     
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    You are now done.
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+    <ng-template matStepLabel>Finish</ng-template>
+    <mat-list-item>End of EPIU</mat-list-item>
+    <mat-divider></mat-divider>
+    <!-- <mat-grid-list cols="1"  rowHeight="8:1">
+      <mat-grid-tile>
+        <div>
+          <h4>
+            I hereby certify that the volunteered information contained in this form are true, correct, and complete in all respects. 
+            By ticking the box below and clicking the “Submit” button, I hereby sign this form and confirm its completion and truthfulness. 
+            I am aware that the giving of false information and non-compliance with the policy 
+            are grounds for the imposition of appropriate disciplinary action.
+          </h4>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        
+        <mat-checkbox [(ngModel)]="agreed" [ngModelOptions]="{standalone: true}">
+          I Agree
+        </mat-checkbox>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-button (click)="finish()">Submit</button>
+      </mat-grid-tile>
+    </mat-grid-list> -->
+    
+    <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+      <div>
+        <h4>
+          I hereby certify that the volunteered information contained in this form are true, correct, and complete in all respects. 
+          By ticking the box below and clicking the “Submit” button, I hereby sign this form and confirm its completion and truthfulness. 
+          I am aware that the giving of false information and non-compliance with the policy 
+          are grounds for the imposition of appropriate disciplinary action.
+        </h4>
+      </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+        <mat-checkbox [(ngModel)]="agreed" [ngModelOptions]="{standalone: true}">
+          I Agree
+        </mat-checkbox>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+        <button mat-button (click)="finish()">Submit</button>
+    </div>
+  
   </mat-step>
 </mat-horizontal-stepper>
 <app-spinner *ngIf="showSpinner"></app-spinner>

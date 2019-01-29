@@ -1,5 +1,9 @@
 
 mat-card {
-    margin-top: 100px;
+    margin-top: 40px;
     width: 70%;
+}
+
+mat-figure {
+    height: 50px !important;
 }
