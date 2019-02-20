@@ -1,13 +1,38 @@
 <ng-container>
   <div  mat-dialog-content>
       <h1 mat-dialog-title>Select Parent Type</h1>
-      <section class="example-section">
+      
+        <section class="example-section">
+   
         <mat-checkbox [(ngModel)]="father" [disabled]="disabledF">Father</mat-checkbox>
-        <br>
+        
         <mat-checkbox [(ngModel)]="mother" [disabled]="disabledM">Mother</mat-checkbox>
-      </section>
-      <br>
-      <button mat-button [mat-dialog-close]="this.data" cdkFocusInitial (click)="btnOKClick()">OK</button>
+        
+        <br>
+
+        <form [formGroup]="parentForm">
+          <mat-form-field class="customMatFormField">
+            <input matInput placeholder="Lastname"  formControlName="parentLastName" (keyup)="updateParent('lastName', $event)" required>
+          </mat-form-field>
+          <mat-form-field class="customMatFormField">
+            <input matInput placeholder="Firstname"  formControlName="parentFirstName" (keyup)="updateParent('firstName', $event)" required>
+          </mat-form-field>
+          <mat-form-field class="customMatFormField">
+            <input matInput placeholder="Middlename" formControlName="parentMiddleName" (keyup)="updateParent('middleName', $event)" required>
+          </mat-form-field>
+  
+          <mat-form-field class="customMatFormField">
+            <input matTooltip="CLICK CALENDAR ICON TO ENTER DATE" matInput [matDatepicker]="picker" placeholder="Birth date(MM/DD/YYYY)" formControlName="parentBirthdate" (dateChange)="updateParent('birthDate', $event)" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </form>
+
+        </section>
+        <br>
+        <button mat-button [mat-dialog-close]="this.data" cdkFocusInitial (click)="btnOKClick()" [disabled]="!parentForm.valid">OK</button>
+
+      
   </div>
    
 </ng-container>

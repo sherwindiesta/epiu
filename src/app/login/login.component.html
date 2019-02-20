@@ -1,29 +1,79 @@
 <ng-container>
   <br>
   <br>
+  <mat-slide-toggle [(ngModel)]="newHire" (change)="changeNewHire()" [disabled]="true" >Toggle on for new hire ONLY</mat-slide-toggle>
+
+  <br>
+  <br>
+
+  <div *ngIf="newHire" >
+    <div fxLayout="row" fxLayout.xs="col" fxLayoutWrap fxLayoutAlign="center">
+      <form [formGroup]="loginForm">
+        <mat-form-field  class="login-mat-form-field">
+          <input matInput formControlName="fullname" [(ngModel)] = "name" placeholder="Fullname (Lastname Firstname Middlename)" required>
+        </mat-form-field>
+      </form>
+      
+    </div>
+  </div>
+  
+
+  <br>
+  <br>
+
+  <div *ngIf="newHire">
+    <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+      <form [formGroup]="loginForm">
+        <mat-form-field class="login-mat-form-field">
+          <!-- <input matInput formControlName="departnemtList" placeholder="Division and Department" required> -->
+        
+        <mat-select placeholder="Division and Department" formControlName="department" (selectionChange)="departmentListChange($event)">
+          <mat-option *ngFor="let d of departmentList" [value]="d.DivisionDepartment">{{d.DivisionDepartment}}</mat-option>
+        </mat-select>
+
+        </mat-form-field>
+
+        
+      </form>
+      
+    </div>
+  </div>
+
+  <br>
+  <br>
 
   <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
-    <mat-form-field>
-      <input matInput placeholder="ID Number" [(ngModel)]="id" required>
-    </mat-form-field>
+    <form [formGroup]="loginForm">
+      <mat-form-field class="login-mat-form-field">
+        <input matInput formControlName="employeeID" maxlength="6" placeholder="ID Number" [(ngModel)]="id" required>
+      </mat-form-field>
+    </form>
+    
   </div>
+
   <br>
   <br>
   
-  <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
-    <mat-form-field>
-      <input type="date" matInput [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]="db" onfocus="(this.type='date')" onblur="(this.type='text')">
-      <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
-      <mat-datepicker #picker></mat-datepicker>
 
-    </mat-form-field>
+  <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+    <form [formGroup]="loginForm">
+      <mat-form-field class="login-mat-form-field">
+        <input matTooltip="CLICK CALENDAR ICON TO ENTER DATE" matInput formControlName="birthDate" [matDatepicker]="picker" placeholder="Date of Birth (MM/DD/YYYY)" (dateChange)="enterBirthDate($event)" readonly required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+  
+      </mat-form-field>
+    </form>
+    
   </div>
+
+  
   <br>
   <br>
   
   <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
     <mat-list-item role="listitem" style="position: center">
-      <button class="buttonSubmit" mat-button (click)="btnClick();" [disabled]='submitted'>Submit</button>
+      <button class="buttonSubmit" mat-button (click)="btnClick();" [disabled]='!loginForm.valid'>Submit</button>
     </mat-list-item>
 
   </div>
@@ -32,9 +82,10 @@
   <br>
   <!-- <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
       
-    <button  mat-button (click)="btnClickNewHire();" color="primary">New Hire / No ID Number Yet?</button>
+    <button  mat-button (click)="btnClickNewHire();" color="primary">New Hire</button>
         
   </div> -->
+  
   <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
     <div class="loading-indicator"  *ngIf="showSpinner">
       <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>

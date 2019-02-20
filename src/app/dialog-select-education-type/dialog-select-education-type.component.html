@@ -1,25 +1,74 @@
 <ng-container>
   <div  mat-dialog-content>
       <h1 mat-dialog-title>Select Education Type Details</h1>
+      <form [formGroup]="newEntryForm">
+        <mat-form-field  class="customMatFormField">
+          <mat-select (selectionChange)="educationLevelChange($event)" placeholder="Level" formControlName="EducationLevel">
+            <mat-option *ngFor="let e of educationLevel" [value]="e.LevelOfEducation" required>
+              {{e.LevelOfEducation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <mat-form-field>
-          <mat-select (selectionChange)="educationLevelChange($event)" placeholder="Level">
-              <mat-option *ngFor="let e of educationLevel" [value]="e.LevelOfEducation">
-                {{e.LevelOfEducation}}
-              </mat-option>
-            </mat-select>
-      </mat-form-field>
-      <br>
-      <mat-form-field>
-          <mat-select (selectionChange)="educationStatusChange($event)" placeholder="Status">
-              <mat-option *ngFor="let e of educationStatus" [value]="e.StatusOfEducation">
-                {{e.StatusOfEducation}}
-              </mat-option>
-            </mat-select>
-      </mat-form-field>
+        <br>
+        <mat-form-field  class="customMatFormField">
+          <mat-select (selectionChange)="educationStatusChange($event)" placeholder="Status" formControlName="EducationStatus">
+            <mat-option *ngFor="let e of educationStatus" [value]="e.StatusOfEducation" required>
+              {{e.StatusOfEducation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      
+        <br>
+        <mat-form-field  class="customMatFormField">
+          <input matInput formControlName="frmCtrlSchoolName" [value]="schoolName" placeholder="School Name" (keyup)="updateEducationSkills('schoolName', $event)" [matAutocomplete]="auto">
+        </mat-form-field>
+
+        <mat-autocomplete  #auto="matAutocomplete">
+          <mat-option class="mat-option-customize" *ngFor="let option of optionsSchools" [value]="option.Name" (onSelectionChange)="optionSelectedSchool(i, option.Name)">{{ option.Name }}</mat-option>
+        </mat-autocomplete>
+         
+
+       
+        <br>   
+         
+        <mat-form-field  class="customMatFormField">
+          <input matInput formControlName="frmCtrlProgram" placeholder="Program/Degree" (keyup)="updateEducationSkills('programDegree', $event)">
+        </mat-form-field>
+      
+        
+        <br>
+          
+        <mat-form-field class="customMatFormField">
+          <input matInput formControlName="frmCtrlSchoolAdress" placeholder="Location" (keyup)="updateEducationSkills('schoolAddress', $event)">
+        </mat-form-field>
+
+        <br>
+        
+        <mat-form-field class="customMatFormFieldDate">
+          <input matInput matTooltip="CLICK CALENDAR ICON TO ENTER DATE" formControlName="frmCtrlYearStarted" [matDatepicker]="picker1" placeholder="Year Started (MM/DD/YYYY)" (dateChange)="updateEducationSkills('yearStarted', $event)" readonly required>
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+          
+        <br>
+        
+        <mat-form-field class="customMatFormFieldDate">
+          <!-- <input matInput  placeholder="YYYY" [value]="element.YearEnded | date:'yyyy'"> -->
+          <input matInput matTooltip="CLICK CALENDAR ICON TO ENTER DATE" formControlName="frmCtrlYearEnded" [matDatepicker]="picker2" placeholder="Year Ended (MM/DD/YYYY)" (dateChange)="updateEducationSkills('yearEnded', $event)" readonly required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+          
+
+
+
+
+      </form>
+      
 
       <br>
-      <button mat-button [mat-dialog-close]="this.data" cdkFocusInitial (click)="btnOKClick()">OK</button>
+      <button mat-button [mat-dialog-close]="this.data" cdkFocusInitial [disabled]="!newEntryForm.valid" (click)="btnOKClick()">OK</button>
   </div>
    
 </ng-container>

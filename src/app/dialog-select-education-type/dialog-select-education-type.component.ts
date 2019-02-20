@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogContent } from '@ang
 import { Router, NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import { DetailsService } from '../details.service';
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import * as moment from 'moment';
 
 @Component({
@@ -13,14 +14,18 @@ import * as moment from 'moment';
 export class DialogSelectEducationTypeComponent implements OnInit {
   
   
-  id; levelOfEducation; status; level; statusOfEducation: string;
-  data; educationLevel; educationStatus: any[] = [];
+  id; levelOfEducation; status; level; 
+  statusOfEducation; schoolName; programDegree; schoolAddress: string;
+  data; educationLevel; educationStatus; optionsSchools: any[] = [];
   CurrentDate = moment().format();
+  yearStarted; yearEnded: any;
+  newEntryForm: FormGroup;
 
   constructor( public dialogRef: MatDialogRef<DialogSelectEducationTypeComponent>,
     @Inject(MAT_DIALOG_DATA) dialogData,
     private router: Router,
-    private detailsService: DetailsService
+    private detailsService: DetailsService,
+    private formBuilder: FormBuilder
     ) { 
       this.data = dialogData.data;
       this.id = dialogData.id;
@@ -41,15 +46,41 @@ export class DialogSelectEducationTypeComponent implements OnInit {
     this.detailsService.getEducationStatus().subscribe(data => {
       this.educationStatus = data;
     });
+
+
+
+    this.newEntryForm = this.formBuilder.group({
+      EducationLevel: ['', Validators.required],
+      EducationStatus: ['', Validators.required],
+      frmCtrlSchoolName: ['', Validators.required],
+      frmCtrlProgram: ['', Validators.required],
+      frmCtrlSchoolAdress: ['', Validators.required],
+      frmCtrlYearStarted: ['', Validators.required],
+      frmCtrlYearEnded: ['', Validators.required]
+    });
   };
 
   btnOKClick() {
   
-    this.AddNewEducationEntry(this.id, this.statusOfEducation, this.levelOfEducation);
+    this.AddNewEducationEntry(this.id, 
+      this.statusOfEducation, 
+      this.levelOfEducation, 
+      this.schoolName,
+      this.programDegree,
+      this.schoolAddress,
+      this.yearStarted,
+      this.yearEnded);
   }
 
 
-  AddNewEducationEntry(EmployeeID: any, statusOfEducation: string, levelOfEducation: string) {
+  AddNewEducationEntry(EmployeeID: any, 
+    statusOfEducation: string, 
+    levelOfEducation: string,
+    schoolName: string,
+    programDegree: string,
+    schoolAdress: string,
+    yearStarted: any,
+    yearEnded: any) {
     
 
     if(statusOfEducation === "Graduate") {
@@ -83,15 +114,15 @@ export class DialogSelectEducationTypeComponent implements OnInit {
       "LeveID": this.level,
       "Level": statusOfEducation,
       "LevelOfEducation": levelOfEducation,
-      "Modified": "",
-      "ModifiedBy": "",
-      "ProgramDegree": "",
-      "SchoolAddress": "",
-      "SchoolName": "",
+      "Modified": this.CurrentDate,
+      "ModifiedBy": EmployeeID,
+      "ProgramDegree": programDegree,
+      "SchoolAddress": schoolAdress,
+      "SchoolName": schoolName,
       "Status": 1,
       "StatusID": this.status,
-      "YearEnded": "",
-      "YearStarted": ""
+      "YearEnded": yearEnded,
+      "YearStarted": yearStarted
     }
 
     this.data = [...this.data, newEntry];
@@ -107,4 +138,50 @@ export class DialogSelectEducationTypeComponent implements OnInit {
   educationLevelChange(event: any) {
     this.levelOfEducation = event.value;
   }
+
+
+  updateEducationSkills(type: any, event: any) {
+   
+    switch(type) {
+      case 'schoolName':
+
+        this.schoolName = event.target.value
+        this.getListOfSchoolNames(this.schoolName);
+
+        break;
+
+      case 'programDegree': 
+        this.programDegree = event.target.value
+        break;
+      
+      case 'schoolAddress': 
+        this.schoolAddress = event.target.value
+        break;
+
+      case 'yearStarted': 
+        this.yearStarted = event.target.value
+        break;
+
+      case 'yearEnded': 
+        this.yearEnded = event.target.value
+        break;
+
+      default:
+        break;  
+    }
+  }
+
+  getListOfSchoolNames(schoolName: string) {
+    
+    return this.detailsService.getListOfSchoolNames(schoolName).subscribe(data => {
+      if(data) {
+        this.optionsSchools = data;
+      }
+    })
+  }
+
+  optionSelectedSchool(i: any, name: any) {
+    this.schoolName = name;
+  }
+
 }

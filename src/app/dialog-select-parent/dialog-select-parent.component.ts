@@ -1,7 +1,11 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogContent } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogContent, MatDialogConfig } from '@angular/material';
 import { Router, NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
+
+// import { DialogAddNewFamilyMemberComponent } from '../dialog-add-new-family-member/dialog-add-new-family-member.component';
+
 // import { PersonalInfoComponent } from '../personal-info/personal-info.component';
 
 
@@ -19,19 +23,25 @@ export class DialogSelectParentComponent implements OnInit {
   mother = false;  
   disabledF = false;
   disabledM = false;
+
+  lastName: string = "";
+  firstName: string = "";
+  middleName: string = "";
+  birthDate: Date;
   
 
   // @Input() parents: Object;
   // @Output() updateParentsChange: EventEmitter<Object> = new EventEmitter<Object>();
 
-  
+  parentForm: FormGroup; 
 
   constructor(
+    private _formBuilder: FormBuilder,
     // public personalInfoComponent: PersonalInfoComponent, 
     public dialogRef: MatDialogRef<DialogSelectParentComponent>,
     @Inject(MAT_DIALOG_DATA) dialogData,
-    private router: Router
-    
+    private router: Router,
+    public dialog: MatDialog
   ) 
   {
     this.description = dialogData.description
@@ -39,6 +49,8 @@ export class DialogSelectParentComponent implements OnInit {
     this.id = dialogData.id;
   }
     
+
+
 
   onNoClick(data): void {
     this.dialogRef.close(data);
@@ -60,6 +72,16 @@ export class DialogSelectParentComponent implements OnInit {
       this.disabledF = false;
       this.disabledM = false;
     }
+
+    this.parentForm = this._formBuilder.group({
+      parentLastName: ['', Validators.required],
+      parentFirstName: ['', Validators.required],
+      parentMiddleName: ['', Validators.required],
+      parentBirthdate: ['', Validators.required]
+    });
+
+    
+
   }
 
   btnOKClick() {
@@ -87,7 +109,9 @@ export class DialogSelectParentComponent implements OnInit {
     else {
       return;
     }
+ 
     this.onNoClick(this.data);
+
   }
 
 
@@ -95,19 +119,46 @@ export class DialogSelectParentComponent implements OnInit {
 
   addNewParentEntry(parent, parentID) {
     var newEntry = { 
-      "BirthDate": "",
+      "BirthDate": this.birthDate,
       "EmployeeID": this.id,
-      "FirstName": "",
+      "FirstName": this.firstName,
       "ID": "",
-      "LastName": "",
+      "LastName": this.lastName,
       "Membership": parent,
       "MembershipID": parentID,
-      "MiddleName": "",
+      "MiddleName": this.middleName,
       "Status": true
     }
-
     this.data = [...this.data, newEntry];
   }
 
+  updateParent(type: any, event: any) {
+    console.log(type)
+    switch (type) {
+      case 'lastName':
+        this.lastName = event.target.value;
+        break;
+
+      case 'firstName':
+        this.firstName = event.target.value;
+        break;
+      
+      case'middleName':
+        this.middleName = event.target.value;
+        break;
+
+      case 'birthDate':
+        
+        this.birthDate = event.target.value
+        
+        this.parentForm.patchValue({
+          parentBirthdate: event.target.value
+        })
+        break;
+
+      default:
+        break;
+    }
+  }
   
 }

@@ -7,3 +7,20 @@
     width: 400px !important;
 }
 
+.customMatFormField {
+    width: 180px !important;
+    padding: 10px !important;
+}
+
+
+mat-form-field {
+    width: 700px !important;
+}
+
+mat-dialog {
+    height: 550px !important;
+}
+
+mat-checkbox {
+    padding: 10px !important;
+}

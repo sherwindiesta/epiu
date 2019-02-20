@@ -1,0 +1,34 @@
+<ng-container>
+    <div  mat-dialog-content>
+        <h1 mat-dialog-title>Add new entry</h1>
+        
+          <section class="example-section">
+     
+          <form [formGroup]="newEntryForm">
+            <mat-form-field class="customMatFormField">
+              <input matInput placeholder="Lastname"  formControlName="newLastName" (keyup)="updateNewEntry('lastName', $event)" required>
+            </mat-form-field>
+            <mat-form-field class="customMatFormField">
+              <input matInput placeholder="Firstname"  formControlName="newFirstName" (keyup)="updateNewEntry('firstName', $event)" required>
+            </mat-form-field>
+            <mat-form-field class="customMatFormField">
+              <input matInput placeholder="Middlename" formControlName="newMiddleName" (keyup)="updateNewEntry('middleName', $event)" required>
+            </mat-form-field>
+    
+            <mat-form-field class="customMatFormField">
+              <input matInput matTooltip="CLICK CALENDAR ICON TO ENTER DATE" [matDatepicker]="picker" placeholder="Birth date (MM/DD/YYYY)" formControlName="newBirthdate" (dateChange)="updateNewEntry('birthDate', $event)" readonly required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </form>
+  
+          </section>
+          <br>
+          <button mat-button [mat-dialog-close]="this.data" cdkFocusInitial [disabled]="!newEntryForm.valid" (click)="btnOKClick()">OK</button>
+  
+        
+    </div>
+     
+  </ng-container>
+  
+  

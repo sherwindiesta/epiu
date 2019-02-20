@@ -79,3 +79,8 @@ table {
 em {
     font-size: 12px !important;
 }
+
+
+.customMatFormFieldNewMem {
+    width: 300px !important;
+}

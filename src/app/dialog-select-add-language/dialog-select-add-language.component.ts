@@ -4,7 +4,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import { DetailsService } from '../details.service';
 import * as moment from 'moment';
-
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 export interface formalEducation {
   value: string;
@@ -42,6 +42,8 @@ export class DialogSelectAddLanguageComponent implements OnInit {
 
   langType: number
 
+  languageForm: FormGroup; 
+
   data; languageLevel; languageTypes: any[] = [];
   
   CurrentDate = moment().format();
@@ -70,7 +72,8 @@ export class DialogSelectAddLanguageComponent implements OnInit {
   constructor( public dialogRef: MatDialogRef<DialogSelectAddLanguageComponent>,
     @Inject(MAT_DIALOG_DATA) dialogData,
     private router: Router,
-    private detailsService: DetailsService) { 
+    private detailsService: DetailsService,
+    private formBuilder: FormBuilder ) { 
 
       this.data = dialogData.data;
       this.id = dialogData.id;
@@ -107,6 +110,14 @@ export class DialogSelectAddLanguageComponent implements OnInit {
       });
     }
     
+    this.languageForm = this.formBuilder.group({
+      frmCtrlTypeLanguage: ['', Validators.required],
+      frmCtrlLevelLanguage: ['', Validators.required],
+      frmCtrlFormalEducationLanguage: ['', Validators.required],
+      frmCtrlCertificationLanguage: ['', Validators.required],
+      frmCtrlWillingToShare: ['', Validators.required],
+      frmCtrlSkillLevel: ['', Validators.required]
+    });
   }
 
   onNoClick(data): void {

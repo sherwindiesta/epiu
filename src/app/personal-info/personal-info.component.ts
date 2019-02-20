@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, ChangeDetectorRef, ViewChild, Directive, HostListener, ElementRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatTableDataSource } from '@angular/material';
@@ -19,9 +19,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSlideToggleChange } from '@angular/material';
 import { Router } from '@angular/router';
 import { map, startWith } from 'rxjs/operators';
+
 // import { DialogMessageComponent } from '../dialog-message/dialog-message.component';
 
 import { rowsAnimation } from '../template.animations';
+
+import { DialogAddNewFamilyMemberComponent } from '../dialog-add-new-family-member/dialog-add-new-family-member.component';
+
 
 export interface Gender {
   code: string;
@@ -49,7 +53,7 @@ export interface Gender {
 })
 export class PersonalInfoComponent implements OnInit {
   
-  
+ 
   
 
   dataSource; dataSourceParents; 
@@ -68,7 +72,7 @@ export class PersonalInfoComponent implements OnInit {
   skillsAgreed; toggleAddressChecked;
   agreed; brailleLevel1; brailleLevel2; brailleLevel3;
   signLanguageLevel1; signLanguageLevel2; 
-  signLanguageLevel3: boolean = false;
+  signLanguageLevel3; newEmployee: boolean = false;
   
   lastName; firstName; middleName; 
   genderCode; genderDesc; selectedGender; 
@@ -85,7 +89,8 @@ export class PersonalInfoComponent implements OnInit {
   targetStructureType1; targetStructureType2;
   targetOwnershipType1; targetOwnershipType2;
   targetContactRelationship; targetPRCtype1; targetPRCtype2;
-  selectedLevelSignLanguageDesc; selectedLevelBrailleSysDesc: string;
+  selectedLevelSignLanguageDesc; selectedLevelBrailleSysDesc
+  newHireFullname; newHireDivisionDepartment: string;
 
   EmployeeID; selectedPostalCity1; selectedPostalCity2
   selectedStructureType1; selectedOwnershipType1;
@@ -114,6 +119,26 @@ export class PersonalInfoComponent implements OnInit {
   displayedColumnsDeclaredOutsideInterest;
   selectedOutsideInterest; optionsSchools: any[] = [];
   
+  regexStr = '^[a-zA-Z0-9_ ./@-]*$';
+  @Input() isAlphaNumeric: boolean;
+
+  @HostListener('keypress', ['$event']) onKeyPress(event) {
+    return new RegExp(this.regexStr).test(event.key);
+  }
+
+  // @HostListener('paste', ['$event']) blockPaste(event: KeyboardEvent) {
+  //   this.validateFields(event);
+  // }
+
+
+  // validateFields(event) {
+  //   setTimeout(() => {
+
+  //     this.el.nativeElement.value = this.el.nativeElement.value.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '');
+  //     event.preventDefault();
+
+  //   }, 100)
+  // }
 
   constructor( private _formBuilder: FormBuilder, 
     iconRegistry: MatIconRegistry, 
@@ -123,16 +148,21 @@ export class PersonalInfoComponent implements OnInit {
     private changeDetectorRefs: ChangeDetectorRef,
     private loginComponent: LoginComponent,
     public dialog: MatDialog,
-    private router: Router ) 
+    private router: Router,
+    private el: ElementRef ) 
     {
 
       this.route.queryParams.subscribe(params => {
+
+        this.newHireFullname = params['Fullname'] || ""; 
+        this.newHireDivisionDepartment = params['DivisionDepartment'] || ""
+        this.newEmployee = params['newEmp'] || false;
         this.EmployeeID = params['EmployeeID'] || "";
-        this.IDname = params['EmployeeIDName'] || 'New Record';
-        this.lastName = params['Surname'];
-        this.firstName = params['FirstName'];
-        this.lastName = params['Surname'];
-        this.middleName = params['MiddleName'];
+        this.IDname = params['EmployeeIDName'] || params['EmployeeID'] + " - " + params['Fullname'];
+        this.lastName = params['Surname'] || "";
+        this.firstName = params['FirstName'] || "";
+        this.lastName = params['Surname'] || "";
+        this.middleName = params['MiddleName'] || "";
         this.birthDate = params['BirthDate'];
         this.selectedGender = params['Gender'];
         this.selectedCivilStatus = Number(params['CivilStatusID'] || 1);
@@ -156,7 +186,7 @@ export class PersonalInfoComponent implements OnInit {
         this.contactFullname = params['EmergencyContactName'];
         this.contactMobile = params['EmergencyCellphone'];
         this.contactLandline = params['EmergencyLandline'] || "";
-        this.selectedContactRelationship = Number(params['EmergencyRelationshipID']);
+        this.selectedContactRelationship = Number(params['EmergencyRelationshipID'] || 9);
         this.strPRCType1 = Number(params['PRCType'] || 0);
         this.strPRCType2 = Number(params['PRCType2'] || 0);
         this.strPRCNo1 = params['PRCNo'] || "";
@@ -165,7 +195,6 @@ export class PersonalInfoComponent implements OnInit {
         this.strPRCExpiryDate2 = params['PRCExpiry2'] || "";
       });
 
-      
     }
 
   ngOnInit() {
@@ -193,7 +222,7 @@ export class PersonalInfoComponent implements OnInit {
     this.selectedLevelSignLanguageDesc = ""; 
     this.selectedLevelBrailleSysDesc = "";
     
-    this.skillsAgreed = false;
+    // this.skillsAgreed = false;
     
 
 
@@ -220,6 +249,7 @@ export class PersonalInfoComponent implements OnInit {
     this.getOtherSkills(this.EmployeeID);
     this.getPRCTypes();
     this.getDeclaredOutsideInterest(this.EmployeeID);
+    this.getPermission(this.EmployeeID);
   
 
     // setInterval(() => {
@@ -251,10 +281,10 @@ export class PersonalInfoComponent implements OnInit {
       
       frmCtrlPostalAdd1: ['', Validators.nullValidator],
       frmCtrlPostalAdd2: ['', Validators.nullValidator],
-      frmCtrlStructure1: ['', Validators.nullValidator],
-      frmCtrlStructure2: ['', Validators.nullValidator],
-      frmCtrlOwnershipType1: ['', Validators.nullValidator],
-      frmCtrlOwnershipType2: ['', Validators.nullValidator],
+      frmCtrlStructure1: ['', Validators.required],
+      frmCtrlStructure2: ['', Validators.required],
+      frmCtrlOwnershipType1: ['', Validators.required],
+      frmCtrlOwnershipType2: ['', Validators.required],
 
       frmCtrlAddress11: [this.add11 || null, Validators.required],
       frmCtrlAddress12: [this.add12, Validators.required],
@@ -332,6 +362,49 @@ export class PersonalInfoComponent implements OnInit {
       });
   }
 
+  openDialogAddNewFamilyMember(type: any, data: any) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.data = {
+      id: this.EmployeeID,
+      data: data,
+      description: type,
+      width: '600px'
+    };
+
+  
+    const dialogRef = this.dialog.open(DialogAddNewFamilyMemberComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+
+        switch(type) {
+          case 'Sibling':
+          this.siblings = result;
+          this.dataSourceSiblings = new MatTableDataSource<Element>(result);
+             break;
+
+          case 'Spouse':
+            this.spouse = result;
+            this.dataSourceSpouse = new MatTableDataSource<Element>(result);
+            break;
+
+          case 'Child':
+            this.child = result;
+            this.dataSourceChild = new MatTableDataSource<Element>(result);
+            break;
+
+          default:
+            break;
+        }
+        // console.log(result);
+        // console.log(result);
+        // this.parents = result;
+        // this.dataSourceParents = new MatTableDataSource<Element>(result);
+      }
+    });
+  }
+
   openDialogSelectEducation() {
 
     const dialogConfig = new MatDialogConfig();
@@ -398,6 +471,8 @@ export class PersonalInfoComponent implements OnInit {
 
   dataChange(type: any, event: any) {
     
+
+   
     // this.lastName = event.target.value;
     
     // console.log(this.lastName);
@@ -572,22 +647,6 @@ export class PersonalInfoComponent implements OnInit {
         break;
       }
 
-      case 'contactMobile': {
-        this.contactMobile = event.target.value;
-        this.firstFormGroup.patchValue({
-          frmCtrlContactMobile: event.target.value
-        })
-        break;
-      }
-
-      case 'contactLandline': {
-        this.contactLandline = event.target.value;
-        this.firstFormGroup.patchValue({
-          frmCtrlContactLandline: event.target.value
-        })
-        break;
-      }
-
       case 'contactLandline': {
         this.contactLandline = event.target.value;
         this.firstFormGroup.patchValue({
@@ -634,7 +693,7 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   add1Change(event: any) {
-    console.log(event);
+    
     this.add11 = event.target.value;
   }
 
@@ -747,7 +806,7 @@ export class PersonalInfoComponent implements OnInit {
 
         this.structureType1 = data;
         this.firstFormGroup.patchValue({
-          frmCtrlStructure1: this.selectedStructureType1
+          frmCtrlStructure1: this.selectedStructureType1 || ""
         });
 
       }
@@ -766,7 +825,7 @@ export class PersonalInfoComponent implements OnInit {
 
         this.structureType2 = data;
         this.firstFormGroup.patchValue({
-          frmCtrlStructure2: this.selectedStructureType2
+          frmCtrlStructure2: this.selectedStructureType2 || ""
         });
         
       }
@@ -786,7 +845,7 @@ export class PersonalInfoComponent implements OnInit {
         this.ownershipType1 = data;
         
         this.firstFormGroup.patchValue({
-          frmCtrlOwnershipType1: this.selectedOwnershipType1
+          frmCtrlOwnershipType1: this.selectedOwnershipType1 || ""
         });
         
       }
@@ -806,7 +865,7 @@ export class PersonalInfoComponent implements OnInit {
         this.ownershipType2 = data;
 
         this.firstFormGroup.patchValue({
-          frmCtrlOwnershipType2: this.selectedOwnershipType2
+          frmCtrlOwnershipType2: this.selectedOwnershipType2 || ""
         });
       }
     });
@@ -892,9 +951,8 @@ export class PersonalInfoComponent implements OnInit {
         this.parents = data;
         this.parentTypes = data;
         this.dataSourceParents = new MatTableDataSource<Element>(data);
+
       }
-
-
     });
   }
 
@@ -910,7 +968,7 @@ export class PersonalInfoComponent implements OnInit {
         
         this.dataSourceSiblings = new MatTableDataSource<Element>(data);
 
-
+       
       }
 
     });
@@ -927,6 +985,8 @@ export class PersonalInfoComponent implements OnInit {
         this.spouse = data;
         
         this.dataSourceSpouse = new MatTableDataSource<Element>(data);
+
+       
       }
 
     });
@@ -944,9 +1004,6 @@ export class PersonalInfoComponent implements OnInit {
         
         this.dataSourceChild = new MatTableDataSource<Element>(data);
 
-        // this.secondFormGroup.patchValue({
-        //   frmCtrlParents: this.parents
-        // })
       }
 
     });
@@ -962,6 +1019,21 @@ export class PersonalInfoComponent implements OnInit {
     });
   }
 
+  getPermission(id) {
+    return this.detailsService.getPermission(id).subscribe(data => {
+      if(data) {
+        if(data.length > 0) {
+          this.skillsAgreed = true;
+        }
+        else {
+          this.skillsAgreed = false;
+        }
+
+      } else {
+        this.skillsAgreed = false;
+      }
+    });
+  }
 
   getListOfSchoolNames(schoolName: string) {
     
@@ -1435,31 +1507,55 @@ export class PersonalInfoComponent implements OnInit {
         break;
 
       case 'siblings':
-        if(this.siblings.length < 10) {
+        // if(this.siblings.length < 10) {
 
-          this.addNewEntry('Sibling ', this.siblings.length + 1);
+        //   this.addNewEntry('Sibling ', this.siblings.length + 1);
     
-        } else {
+        // } else {
+        //   this.loginComponent.openDialog('Ooops! maximum count reach for "Sibling"');
+        // }
+
+        if(this.siblings.length < 10) {
+          this.openDialogAddNewFamilyMember('Sibling', this.siblings);
+        }
+        else {
           this.loginComponent.openDialog('Ooops! maximum count reach for "Sibling"');
         }
+
         break;
 
       case 'spouse':
+        // if(this.spouse.length < 1) {
+        //   this.addNewEntry('Spouse', "");
+        // }
+        // else {
+        //   this.loginComponent.openDialog('Ooops! No more than 1 spouse, OK?');
+        // }
+
         if(this.spouse.length < 1) {
-          this.addNewEntry('Spouse', "");
+          this.openDialogAddNewFamilyMember('Spouse', this.spouse);
         }
         else {
           this.loginComponent.openDialog('Ooops! No more than 1 spouse, OK?');
         }
+        
+
         break;
 
       case 'child':
-        if(this.child.length < 10) {
-          this.addNewEntry('Child ', this.child.length + 1);
+        // if(this.child.length < 10) {
+        //   this.addNewEntry('Child ', this.child.length + 1);
     
-        } else {
-          this.loginComponent.openDialog('Ooops! maximum count reach for "Sibling"');
+        // } else {
+        //   this.loginComponent.openDialog('Ooops! maximum count reach for "Sibling"');
+        // }
+        if(this.child.length < 10) {
+          this.openDialogAddNewFamilyMember('Child', this.child);
         }
+        else {
+          this.loginComponent.openDialog('Ooops! maximum count reach for "Child"');
+        }
+
         break;
       
       case 'education':
@@ -1515,6 +1611,7 @@ export class PersonalInfoComponent implements OnInit {
     switch(type) {
       case 'Sibling ':
         this.siblings = [...this.siblings, newEntryFamily];
+
         this.dataSourceSiblings = new MatTableDataSource<Element>(this.siblings);
         break;
 
@@ -1561,7 +1658,6 @@ export class PersonalInfoComponent implements OnInit {
         this.localLanguageSkills = data
         this.dataSourceLocalLanguageSkills = new MatTableDataSource<Element>(data);
       }
-
     });
   }
 
@@ -1807,37 +1903,92 @@ export class PersonalInfoComponent implements OnInit {
       try {
         let now = new Date;
 
-        //START******** CONTACT INFORMATION **************/
-        this.detailsService.updateEmployeeDataDetails(
-        this.EmployeeID,
-        moment(now).format('L HH:mm:ss'),
-        this.mobile1,
-        this.mobile2,
-        this.landline,
-        this.email,
-        this.selectedBloodType,
-        this.selectedCivilStatus,
-        this.add11,
-        this.add21,
-        this.add12,
-        this.add22,
-        this.add13,
-        this.add23,
-        this.selectedPostalCity1,
-        this.selectedPostalCity2,
-        this.selectedStructureType1,
-        this.selectedStructureType2,
-        this.selectedOwnershipType1,
-        this.selectedOwnershipType2,
-        this.contactFullname,
-        this.contactMobile,
-        this.contactLandline,
-        this.selectedContactRelationship
-      ).subscribe(data => {
-        if(data) {
-          console.log(true);
+        if(this.newEmployee) {
+          this.detailsService.insertNewHireMMCDataPrivacyConsent(
+            this.newHireFullname,
+            this.newHireDivisionDepartment.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '-'),
+            true,
+            moment(now).format('L HH:mm:ss'),
+            this.EmployeeID
+          ).subscribe(data => {
+            if(data) {
+              console.log(data);
+            }
+          },(err) => {
+            this.loginComponent.openDialog(err);
+          })
         }
-      });
+
+        //OLD EMPLOYEE
+        if(!this.newEmployee) {
+          //START******** CONTACT INFORMATION **************/
+          this.detailsService.updateEmployeeDataDetails(
+            this.EmployeeID,
+            moment(now).format('L HH:mm:ss'),
+            this.mobile1.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.mobile2.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.landline.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.email,
+            this.selectedBloodType,
+            this.selectedCivilStatus,
+            this.add11.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add21.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add12.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add22.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add13.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add23.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.selectedPostalCity1,
+            this.selectedPostalCity2,
+            this.selectedStructureType1,
+            this.selectedStructureType2,
+            this.selectedOwnershipType1,
+            this.selectedOwnershipType2,
+            this.contactFullname,
+            this.contactMobile,
+            this.contactLandline,
+            this.selectedContactRelationship
+          ).subscribe(data => {
+            if(data) {
+              console.log(data);
+            }
+          });
+        }
+        else {
+          
+          this.detailsService.insertEmployeeDataDetails(
+            this.EmployeeID,
+            moment(now).format('L HH:mm:ss'),
+            this.mobile1.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.mobile2.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.landline.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.email,
+            this.selectedBloodType,
+            this.selectedCivilStatus,
+            this.add11.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add21.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add12.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add22.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add13.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.add23.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+            this.selectedPostalCity1,
+            this.selectedPostalCity2,
+            this.selectedStructureType1,
+            this.selectedStructureType2,
+            this.selectedOwnershipType1,
+            this.selectedOwnershipType2,
+            this.contactFullname,
+            this.contactMobile,
+            this.contactLandline,
+            this.selectedContactRelationship
+          ).subscribe(data => {
+            if(data) {
+              console.log(data);
+            }
+          },(err) => {
+            this.loginComponent.openDialog(err);
+          })
+        }
+        
       //END******** CONTACT INFORMATION **************/
 
 
@@ -1963,10 +2114,14 @@ export class PersonalInfoComponent implements OnInit {
           if(data) {
             console.log('data');
           }
+        },(err) => {
+          this.loginComponent.openDialog(err);
         })
       }else {
         this.detailsService.deletePRCLicenses1(this.EmployeeID).subscribe(data => {
           console.log(data);
+        },(err) => {
+          this.loginComponent.openDialog(err);
         })
       }
       
@@ -1985,11 +2140,15 @@ export class PersonalInfoComponent implements OnInit {
           if(data) {
             console.log(data);
           }
+        },(err) => {
+          this.loginComponent.openDialog(err);
         })
       } 
       else {
         this.detailsService.deletePRCLicenses2(this.EmployeeID).subscribe(data => {
           console.log(data);
+        },(err) => {
+          this.loginComponent.openDialog(err);
         })
       }
       
@@ -2015,6 +2174,8 @@ export class PersonalInfoComponent implements OnInit {
                 this.skillsAgreed
               ).subscribe(data => {
                 console.log(data);
+              },(err) => {
+                this.loginComponent.openDialog(err);
               })
             }
           }
@@ -2033,6 +2194,8 @@ export class PersonalInfoComponent implements OnInit {
                 this.skillsAgreed
               ).subscribe(data => {
                 console.log(data);
+              },(err) => {
+                this.loginComponent.openDialog(err);
               })
             }
           }
@@ -2048,6 +2211,8 @@ export class PersonalInfoComponent implements OnInit {
               this.EmployeeID, 1, this.selectedLevelSignLanguageDesc, this.skillsAgreed
             ).subscribe(data => {
               console.log(data);
+            },(err) => {
+              this.loginComponent.openDialog(err);
             })
           }
 
@@ -2056,6 +2221,8 @@ export class PersonalInfoComponent implements OnInit {
               this.EmployeeID, 2, this.selectedLevelBrailleSysDesc, this.skillsAgreed
             ).subscribe(data => {
               console.log(data);
+            },(err) => {
+              this.loginComponent.openDialog(err);
             })
           }
         }
@@ -2072,8 +2239,8 @@ export class PersonalInfoComponent implements OnInit {
                 this.detailsService.updateDeclaredOutsideInterest(
                   this.EmployeeID,
                   this.declaredOutsideInterest[i].Name,
-                  this.declaredOutsideInterest[i].EntityName,
-                  this.declaredOutsideInterest[i].NatureOfBusiness,
+                  this.declaredOutsideInterest[i].EntityName.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
+                  this.declaredOutsideInterest[i].NatureOfBusiness.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ''),
                   this.declaredOutsideInterest[i].Position,
                   this.declaredOutsideInterest[i].DateJoined,
                   this.declaredOutsideInterest[i].Declared,
@@ -2081,13 +2248,17 @@ export class PersonalInfoComponent implements OnInit {
                   moment().format('L')
                 ).subscribe(data => {
                   console.log(data);
+                },(err) => {
+                  this.loginComponent.openDialog(err);
                 })
               }
             }
           }
         }
+      },(err) => {
+        this.loginComponent.openDialog(err);
       })
-      this.loginComponent.openDialog('Data has been saved')
+      //this.loginComponent.openDialog('Data has been saved')
 
       this.router.navigate(['finishPage']);
      
@@ -2109,6 +2280,8 @@ export class PersonalInfoComponent implements OnInit {
   ) {
     this.detailsService.updateFamilyMembersData(id, membershipID, lastName, firstName, middleName, birthDate).subscribe(data => {
       console.log(data);
+    }, (err) => {
+      this.loginComponent.openDialog(err);
     })
   }
 
@@ -2140,6 +2313,8 @@ export class PersonalInfoComponent implements OnInit {
       schoolName,
       schoolAddress).subscribe(data => {
       console.log(data);
+    },(err) => {
+      this.loginComponent.openDialog(err);
     })
   }
  

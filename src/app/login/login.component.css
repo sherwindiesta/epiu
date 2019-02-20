@@ -33,3 +33,9 @@
   height: unset !important;
   
 }
+
+
+.login-mat-form-field {
+  width: 400px !important;
+  padding-top: 5px;
+}

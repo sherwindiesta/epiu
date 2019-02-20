@@ -127,10 +127,10 @@
       </mat-grid-list>
       <!-- ################# END BASIC INFORMATION ################# -->
 
-      <mat-grid-list cols="4" rowHeight="5:1">
+      <mat-grid-list cols="4" rowHeight="4:1">
         <mat-list-item>Address</mat-list-item>
         <mat-divider></mat-divider>
-        <mat-slide-toggle [checked]="toggleAddressChecked" (change)="toggleAddress($event)" >Present address the same as the Permanent address?</mat-slide-toggle>
+        <mat-slide-toggle [checked]="toggleAddressChecked" (change)="toggleAddress($event)" >Permanent address equal to Present address</mat-slide-toggle>
 
         <mat-grid-tile></mat-grid-tile>
         <mat-grid-tile>
@@ -147,7 +147,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <input matInput maxlength="50" placeholder="Street/Unit/Block/Lot Number" formControlName="frmCtrlAddress11" [value]="add11" (keyup)="dataChange('add11', $event)" required>
+              <input ng-pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/" matInput maxlength="50" placeholder="Street/Unit/Block/Lot Number" formControlName="frmCtrlAddress11" [value]="add11" (keyup)="dataChange('add11', $event)" required>
             </mat-form-field>
           </div>
         </mat-grid-tile>
@@ -246,7 +246,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="Structure Type" formControlName="frmCtrlStructure1" (selectionChange)="structureChange1($event)">
+              <mat-select placeholder="Structure Type" formControlName="frmCtrlStructure1" (selectionChange)="structureChange1($event)" required>
                 <mat-option *ngFor="let s of structureType1" [value]="s.ID">{{s.Description}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -256,7 +256,7 @@
         <mat-grid-tile>
           <div>
             <mat-form-field>
-              <mat-select placeholder="Structure Type" formControlName="frmCtrlStructure2" (selectionChange)="structureChange2($event)">
+              <mat-select placeholder="Structure Type" formControlName="frmCtrlStructure2" (selectionChange)="structureChange2($event)" required>
                 <mat-option *ngFor="let s of structureType2" [value]="s.ID">{{s.Description}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -270,7 +270,7 @@
       <mat-grid-tile>
         <div>
           <mat-form-field>
-            <mat-select placeholder="Ownership Type" formControlName="frmCtrlOwnershipType1" (selectionChange)="ownershipTypeChange1($event)">
+            <mat-select placeholder="Ownership Type" formControlName="frmCtrlOwnershipType1" (selectionChange)="ownershipTypeChange1($event)" required>
               <mat-option *ngFor="let o of ownershipType1" [value]="o.ID">{{o.Description}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -279,7 +279,7 @@
       <mat-grid-tile>
         <div>
           <mat-form-field>
-            <mat-select placeholder="Ownership Type" formControlName="frmCtrlOwnershipType2" (selectionChange)="ownershipTypeChange2($event)">
+            <mat-select placeholder="Ownership Type" formControlName="frmCtrlOwnershipType2" (selectionChange)="ownershipTypeChange2($event)" required>
               <mat-option *ngFor="let o of ownershipType2" [value]="o.ID">{{o.Description}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -381,7 +381,7 @@
             <td mat-cell *matCellDef="let element; let i = index"> 
               <mat-form-field floatLabel="never">
           
-                <input matInput  placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('parentsLastName', i, $event)" required>  
+                <input matInput  placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('parentsLastName', i, $event)" required readonly>  
                 
               </mat-form-field>
             </td>
@@ -391,7 +391,7 @@
             <th mat-header-cell *matHeaderCellDef> First Name </th>  
             <td mat-cell *matCellDef="let element; let i = index"> 
               <mat-form-field floatLabel="never">
-                <input matInput  placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('parentsFirstName', i, $event)" required>
+                <input matInput  placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('parentsFirstName', i, $event)" required readonly>
               </mat-form-field>
             </td>
           </ng-container>
@@ -400,7 +400,7 @@
             <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('parentsMiddleName', i, $event)" required>
+                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('parentsMiddleName', i, $event)" required readonly>
               </mat-form-field>
             </td>
           </ng-container>
@@ -409,10 +409,11 @@
             <th mat-header-cell *matHeaderCellDef> Birth Date </th>
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field floatLabel="never">
-                <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('parentsBirthDate', i, $event)" required>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <input  matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('parentsBirthDate', i, $event)"  required readonly>
+                <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker> -->
               </mat-form-field>
+              
             </td>
           </ng-container>
 
@@ -462,7 +463,7 @@
   
             <td mat-cell *matCellDef="let element; let i = index"> 
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('siblingsLastName', i, $event)">
+                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('siblingsLastName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -471,7 +472,7 @@
             <th mat-header-cell *matHeaderCellDef> First Name </th>  
             <td mat-cell *matCellDef="let element; let i = index"> 
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('siblingsFirstName', i, $event)">
+                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('siblingsFirstName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -480,7 +481,7 @@
             <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('siblingsMiddleName', i, $event)">
+                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('siblingsMiddleName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -489,9 +490,9 @@
             <th mat-header-cell *matHeaderCellDef> Birth Date </th>
             <td mat-cell *matCellDef="let element; let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('siblingsBirthDate', i, $event)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
+                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('siblingsBirthDate', i, $event)" readonly required>
+                  <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker> -->
                 </mat-form-field>
             </td>
           </ng-container>
@@ -546,7 +547,7 @@
   
             <td mat-cell *matCellDef="let element; let i = index"> 
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('spouseLastName', i, $event)">
+                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('spouseLastName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -555,7 +556,7 @@
             <th mat-header-cell *matHeaderCellDef> First Name </th>  
             <td mat-cell *matCellDef="let element; let i = index"> 
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('spouseFirstName', i, $event)">
+                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('spouseFirstName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -564,7 +565,7 @@
             <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('spouseMiddleName', i, $event)">
+                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('spouseMiddleName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -573,9 +574,9 @@
             <th mat-header-cell *matHeaderCellDef> Birth Date </th>
             <td mat-cell *matCellDef="let element; let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('spouseBirthDate', i, $event)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
+                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('spouseBirthDate', i, $event)" readonly required>
+                  <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker> -->
                 </mat-form-field>
             </td>
           </ng-container>
@@ -631,7 +632,7 @@
   
             <td mat-cell *matCellDef="let element; let i = index"> 
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('childLastName', i, $event)">
+                <input matInput placeholder="Last Name" [value]="element.LastName" (keyup)="updateFamilyMembers('childLastName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -640,7 +641,7 @@
             <th mat-header-cell *matHeaderCellDef> First Name </th>  
             <td mat-cell *matCellDef="let element; let i = index"> 
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('childFirstName', i, $event)">
+                <input matInput placeholder="First Name" [value]="element.FirstName" (keyup)="updateFamilyMembers('childFirstName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -649,7 +650,7 @@
             <th mat-header-cell *matHeaderCellDef> Middle Name </th>  
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field floatLabel="never">
-                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('childMiddleName', i, $event)">
+                <input matInput placeholder="Middle Name" [value]="element.MiddleName" (keyup)="updateFamilyMembers('childMiddleName', i, $event)" readonly required>
               </mat-form-field>
             </td>
           </ng-container>
@@ -658,9 +659,9 @@
             <th mat-header-cell *matHeaderCellDef> Birth Date </th>
             <td mat-cell *matCellDef="let element; let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('childBirthDate', i, $event)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
+                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.BirthDate" (dateChange)="updateFamilyMembers('childBirthDate', i, $event)" readonly required>
+                  <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker> -->
                 </mat-form-field>
             </td>
           </ng-container>
@@ -691,7 +692,7 @@
       </div>
 
       <div class="fab-containerNext">
-        <button mat-fab matStepperNext>Next</button>
+        <button mat-fab matStepperNext >Next</button>
       </div>
     </form>
   </mat-step>
@@ -731,12 +732,14 @@
                 </mat-form-field>
               </td>
             </ng-container>
-    
+            <br>
+            <br>
+            
             <ng-container matColumnDef="SchoolName">
               <th mat-header-cell *matHeaderCellDef> School </th>
               <td mat-cell *matCellDef="let element; let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput placeholder="School Name" [value]="element.SchoolName" (keyup)="updateEducationSkills('schoolName', i, $event)" [matAutocomplete]="auto">
+                  <input matInput placeholder="School Name" [value]="element.SchoolName" (keyup)="updateEducationSkills('schoolName', i, $event)" [matAutocomplete]="auto" readonly>
                 </mat-form-field>
 
                 <mat-autocomplete  #auto="matAutocomplete">
@@ -747,9 +750,9 @@
     
             <ng-container matColumnDef="ProgramDegree">
               <th mat-header-cell *matHeaderCellDef> Degree </th>  
-              <td mat-cell *matCellDef="let element; let i = index"> 
+              <td mat-cell *matCellDef="let element; let i = index">
                 <mat-form-field floatLabel="never">
-                  <input matInput placeholder="Program/Degree" [value]="element.ProgramDegree" (keyup)="updateEducationSkills('programDegree', i, $event)">
+                  <input matInput placeholder="Program/Degree" [value]="element.ProgramDegree" (keyup)="updateEducationSkills('programDegree', i, $event)" readonly>
                 </mat-form-field>
               </td>
             </ng-container>
@@ -758,7 +761,7 @@
               <th mat-header-cell *matHeaderCellDef> Location </th>  
               <td mat-cell *matCellDef="let element; let i = index">
                 <mat-form-field class="customMatFormField" floatLabel="never">
-                  <input matInput placeholder="Location" [value]="element.SchoolAddress" (keyup)="updateEducationSkills('schoolAddress', i, $event)">
+                  <input matInput placeholder="Location" [value]="element.SchoolAddress" (keyup)="updateEducationSkills('schoolAddress', i, $event)" readonly>
                 </mat-form-field>
 
               </td>
@@ -768,9 +771,9 @@
               <th mat-header-cell *matHeaderCellDef> Start Year </th>
               <td mat-cell *matCellDef="let element; let i = index">
                   <mat-form-field class="customMatFormFieldDate" floatLabel="never">
-                    <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.YearStarted" (dateChange)="updateEducationSkills('yearStarted', i, $event)">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.YearStarted" (dateChange)="updateEducationSkills('yearStarted', i, $event)" readonly required>
+                    <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker> -->
                   </mat-form-field>
               </td>
             </ng-container>
@@ -780,9 +783,9 @@
               <td mat-cell *matCellDef="let element; let i = index">
                   <mat-form-field class="customMatFormFieldDate" floatLabel="never">
                     <!-- <input matInput  placeholder="YYYY" [value]="element.YearEnded | date:'yyyy'"> -->
-                    <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.YearEnded" (dateChange)="updateEducationSkills('yearEnded', i, $event)">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="element.YearEnded" (dateChange)="updateEducationSkills('yearEnded', i, $event)" readonly required>
+                    <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker> -->
                   </mat-form-field>
               </td>
             </ng-container>
@@ -802,7 +805,8 @@
             <tr mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumnsEducation;"></tr>
           </table>
         </div>
-
+        <br>
+        <br>
         <!-- *****************************************PRC LICENSES********************************** -->
 
       <!-- <h3>PRC License</h3> -->
@@ -833,7 +837,7 @@
           <div>
             <mat-form-field>
               <!-- <input matInput placeholder="Expiration Date MM/DD/YYYY" formControlName="frmCtrlExpDate2> -->
-              <input matInput [matDatepicker]="picker1" placeholder="MM/DD/YYYY"  [value]="strPRCExpiryDate1" (dateChange)="updatePRClicense('ExpDate1', $event)" required>
+              <input matInput matTooltip="CLICK CALENDAR ICON TO ENTER DATE" [matDatepicker]="picker1" placeholder="Valid until (MM/DD/YYYY)"  [value]="strPRCExpiryDate1" (dateChange)="updatePRClicense('ExpDate1', $event)" readonly>
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
@@ -864,7 +868,7 @@
           <div>
             <mat-form-field>
               <!-- <input matInput placeholder="Expiration Date MM/DD/YYYY" formControlName="frmCtrlExpDate2"> -->
-              <input matInput [matDatepicker]="picker2" placeholder="MM/DD/YYYY" [value]="strPRCExpiryDate2" (dateChange)="updatePRClicense('ExpDate2', $event)" required>
+              <input matInput matTooltip="CLICK CALENDAR ICON TO ENTER DATE" [matDatepicker]="picker2" placeholder="Valid until (MM/DD/YYYY)" [value]="strPRCExpiryDate2" (dateChange)="updatePRClicense('ExpDate2', $event)" readonly>
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
@@ -1332,7 +1336,8 @@
 
       </mat-grid-list>
     </form>
-
+    <br>
+    <br>
     <mat-list-item>Present Address</mat-list-item>
     <mat-divider></mat-divider>
     <form [formGroup]="firstFormGroup" >
@@ -1395,7 +1400,8 @@
 
       </mat-grid-list>
     </form>
-
+    <br>
+    <br>
     <mat-list-item>Permanent Address</mat-list-item>
     <mat-divider></mat-divider>
     <form [formGroup]="firstFormGroup" >
@@ -1458,7 +1464,8 @@
 
       </mat-grid-list>
     </form>
-
+    <br>
+    <br>
     <mat-list-item>Emergency Contact Person</mat-list-item>
     <mat-divider></mat-divider>
     <form [formGroup]="firstFormGroup" >
@@ -1498,6 +1505,8 @@
     </form>
      
     <!--**************************** PARENTS **************************** -->
+    <br>
+    <br>
     <mat-list-item>Living Family Members</mat-list-item>
     <mat-divider></mat-divider>
     <table *ngIf="parents.length !==0" mat-table [dataSource]="dataSourceParents" class="mat-elevation-z8" >
@@ -1761,7 +1770,8 @@
       </table>
       
       <!--**************************** EDUCATION **************************** -->
-
+      <br>
+      <br>
       <mat-list-item>Education / Skills</mat-list-item>
       <mat-divider></mat-divider>
 
@@ -1848,7 +1858,8 @@
 
 
       <!--**************************** LICENSES **************************** -->
-      
+      <br>
+      <br>
       <mat-list-item>PRC License</mat-list-item>
       <mat-divider></mat-divider>
       <form [formGroup]="thirdFormGroup" >
@@ -1873,7 +1884,7 @@
             <mat-grid-tile>
               <div>
                 <mat-form-field>
-                  <input matInput placeholder="MM/DD/YYYY"  [value]="strPRCExpiryDate1 | date: 'MM/dd/yyyy'" readonly>
+                  <input matInput placeholder="Valid until (MM/DD/YYYY)"  [value]="strPRCExpiryDate1 | date: 'MM/dd/yyyy'" readonly>
                 </mat-form-field>
               </div>
             </mat-grid-tile>
@@ -1897,7 +1908,7 @@
             <mat-grid-tile>
               <div>
                 <mat-form-field>
-                  <input matInput placeholder="MM/DD/YYYY"  [value]="strPRCExpiryDate2 | date: 'MM/dd/yyyy'" readonly>
+                  <input matInput placeholder="Valid until (MM/DD/YYYY)"  [value]="strPRCExpiryDate2 | date: 'MM/dd/yyyy'" readonly>
                 </mat-form-field>
               </div>
             </mat-grid-tile>
@@ -1907,6 +1918,8 @@
           <!-- *************************LANGUAGE************************ -->
 
       <!-- <h3>Language</h3> -->
+      <br>
+      <br>
       <mat-list-item>Language</mat-list-item>
       <mat-divider></mat-divider>
 
@@ -2070,7 +2083,8 @@
         </table>
       </div>
       
-
+      <br>
+      <br>
       <!-- <h3>Skills</h3> -->
       <mat-list-item>Sign Language / Braille System</mat-list-item>
       <mat-divider></mat-divider>
@@ -2125,6 +2139,8 @@
 
       </mat-grid-list>
 
+      <br>
+      <br>
       <mat-list-item>Mobile phone number sharing consent</mat-list-item>
       <mat-divider></mat-divider>
       
@@ -2139,7 +2155,8 @@
       </mat-grid-list>
 
 
-      
+      <br>
+      <br>
       <mat-list-item>Declared Outside Interests / Employment</mat-list-item>
       <mat-divider></mat-divider>
 
@@ -2281,4 +2298,7 @@
   
   </mat-step>
 </mat-horizontal-stepper>
-<app-spinner *ngIf="showSpinner"></app-spinner>
+<!-- <app-spinner *ngIf="showSpinner"></app-spinner> -->
+<div class="loading-indicator"  *ngIf="showSpinner">
+  <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+</div>

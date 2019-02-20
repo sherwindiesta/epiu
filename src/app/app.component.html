@@ -1,54 +1,87 @@
 <ng-container *ngIf="show">
-
-        <!-- <mat-grid-list cols="1"  rowHeight="7:1">
-            <mat-grid-tile>
-                
-            <mat-card>
-                <h4>
-                    As an employee of Makati Medical Center (MMC), I am voluntarily disclosing to MMC all personal information required by the Employee Personal Information Update (EPIU), which I shall provide through the accomplishing of this electronic form. I am also giving MMC permission to collect, record, and process the information in the said form.
-            
-                    I understand that the purpose of disclosing such information is for the update of the employee database managed by the Human Resources Management & Development Division.
-                    
-                    I hereby acknowledge that any misrepresentation or omission that is subsequently discovered will be sufficient grounds for MMC to implement appropriate sanctions.
-    
-                </h4>
-            </mat-card>
-                
-                
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <mat-checkbox [(ngModel)]="checked">Check to Proceed</mat-checkbox>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-button (click)="btnIagreeClick()">Submit</button>
-            </mat-grid-tile>
-        </mat-grid-list> -->
-
+    <div *ngIf="isIEOrEdge === false">
         <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
             <mat-card>
-                <h4>
-                    As an employee of Makati Medical Center (MMC), I am voluntarily disclosing to MMC all personal information required by the Employee Personal Information Update (EPIU), which I shall provide through the accomplishing of this electronic form. I am also giving MMC permission to collect, record, and process the information in the said form.
-            
-                    I understand that the purpose of disclosing such information is for the update of the employee database managed by the Human Resources Management & Development Division.
-                    
-                    I hereby acknowledge that any misrepresentation or omission that is subsequently discovered will be sufficient grounds for MMC to implement appropriate sanctions.
-    
-                </h4>
+                <div style="text-align: center">
+                    <h3>
+                        MMC DATA PRIVACY NOTICE AND CONSENT FOR EMPLOYEES AND HOUSE STAFF
+                    </h3>
+                </div>
+                
+                <div style="text-align: justify">
+                    <p>
+                        <!-- Please be sure to update your information accordingly to ensure your records are up to date and accurate. -->
+                        Republic Act 10173, otherwise known as The Data Privacy Act of 2012 (the “DPA”) sets out the principles that should be followed when processing personal data of any kind. One of the ways in which Makati Medical Center (MakatiMed) can take steps to comply with some of these principles is to ask its employees and house staff to consent to the processing of their employment-related personal data.  
+                    </p>
+                    <p>
+                        As an employer, MakatiMed maintains certain personal information about you as part of its general employee records. MakatiMed’s records may include, but are not limited to, your address and contact details, marital status, gender, nationality, educational background, employment application, history with the company, areas of expertise, details of salary and benefits, bank details, performance appraisals and salary reviews, attendance, leave records, working time records, medical records and history, government issued identifications (including driver’s license, Social Security System number, Philhealth number, Tax Identification Number, Professional Regulations Commission), tax records, and other management records. MakatiMed is aware of your personal information in a number of ways - directly from you, from others and otherwise over time through its relationship with you - and may receive and/or retain it in various forms (whether in writing, electronically, or other forms).
+                    </p>
+                    <p>
+                        MakatiMed uses these information for a variety of personnel administration and employee, work and general business management purposes. For example, information is needed to administer payroll, improve and maintain the administration of employee benefits (such as, but not limited to, leave entitlements, medical and insurance benefits, maternity benefits, legislated benefits, etc.), general office management, performance and salary reviews, administration of the company’s information technology and communications systems, record keeping and compliance with other legal obligations. MakatiMed also uses the information for hospital activities including, but not limited to, Employee Engagement activities (MVP Olympics, MMC Anniversary, CSR Programs, Blood Donation Campaigns, Parties), Climate Surveys, Training Needs Surveys, and other topics that will be of interest to you (company news/announcements, birthday greetings, promotions, etc.).
+                    </p>
+                    <p>
+                        MakatiMed also processes information relating to your health condition which may be considered as sensitive personal data. The specific information that the company holds relating to your health includes your sick leave availments, medical certificates, results of annual physical exams, availment of Philhealth benefits, health or life insurance claims. MakatiMed processes your sensitive personal data, specifically health information for general employment records and benefits administration and management, as well as to comply with statutory obligations under the National Health Insurance Program (Philhealth), Bureau of Internal Revenue (BIR) and from time to time with the Department of Health (DOH), Department of Labor and Employment (DOLE) and Food and Drug Administration (FDA).
+                    </p>
+                    <p>
+                        This personal information is secured in MakatiMed’s information systems/databases and/or personnel files kept in its office. MakatiMed employs security measures and company policies are in place to ensure the confidentiality of these information. These measures will be reviewed over time and upgraded in line with technological developments.
+                    </p>
+                    <p>
+                        From time to time, you will be asked to review and update the personal information held on file, although you are welcome to review and update this information more or less frequently, as you wish.
+                    </p>
+                    <p>
+                        Please confirm your consent to MakatiMed processing personal data relating to you for the purposes mentioned above by signing this form in the space provided below. If you have any questions, please contact the MakatiMed Human Resources Management and Development Division.
+                    </p>
+                </div>
             </mat-card>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
-            <mat-checkbox [(ngModel)]="checked">Check to Proceed</mat-checkbox>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="center">
-            <button mat-button (click)="btnIagreeClick()">Submit</button>
         </div>
         
-</ng-container>
+        <br>
+        <br>
+       
+     
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="center">
+            <mat-checkbox [(ngModel)]="agreed" [ngModelOptions]="{standalone: true}">
+                I hereby declare that I am adequately informed of my rights to privacy and confidentiality and I consent to the use, storage, and utilization of my personal data as stated above.
+            </mat-checkbox>
+        </div>
+   
+        
 
+        <br>
+        <br>
+
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutAlign="center">
+            <button [disabled]="!agreed" mat-button (click)="btnIagreeClick()">Continue to EPIU</button>
+        </div>
+
+        <br>
+        <br>
+
+    </div>
+    <div *ngIf="isIEOrEdge === true">
+        <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+            <mat-card>
+                <h3>
+                    If you're using Internet Explorer or Microsoft Edge, copy the link address below and paste to Google Chrome search box to access EPIU system. Thank you.  
+                </h3>
+            </mat-card>
+        </div>
+        <br>
+        <br>
+        <br>
+        
+        <div fxLayout="row" fxLayout.xs="row" fxLayoutWrap fxLayoutAlign="center">
+
+            <mat-list>
+                <mat-list-item>
+                    <h1>
+                        http://MMC-HR-APPS-02/MMCEPIU
+                    </h1>
+                </mat-list-item>
+            
+            </mat-list>
+        </div>
+
+    </div>
+</ng-container>
 <router-outlet></router-outlet>

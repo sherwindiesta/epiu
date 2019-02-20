@@ -159,6 +159,16 @@ import { ConfigService } from './config.service';
     return this.returnData(url);
   }
 
+  getPermission(id: number) {
+    const url = 'http://'+ this.config.ipPort +'/getPermission?id=' + id;
+    return this.returnData(url);
+  }
+
+  getDivisionDepartmentList() {
+    const url = 'http://'+ this.config.ipPort +'/getDivisionDepartmentList';
+    return this.returnData(url);
+  }
+
   updateEmployeeDataDetails(
     id: number,
     modifiedDate: any,
@@ -214,6 +224,8 @@ import { ConfigService } from './config.service';
   }
 
 
+  
+
   deleteFamilyMembersData(id: number) {
     const url = 'http://'+ this.config.ipPort +'/deleteFamilyMembersData?id=' + id;
     return this.deleteData(url);
@@ -256,6 +268,77 @@ import { ConfigService } from './config.service';
     return this.createData(url);
   }
 
+ 
+  insertNewHireMMCDataPrivacyConsent(
+    fullname: string,
+    divisionDepartment: string, 
+    Agree: any,
+    DateEntered: any,
+    user: string
+  ) {
+    const url = 'http://'+ this.config.ipPort +'/insertNewHireMMCDataPrivacyConsent?fullname=' + fullname + 
+    '&divisionDepartment=' + divisionDepartment +
+    '&Agree=' + Agree +
+    '&DateEntered=' + DateEntered +
+    '&user=' + user;
+
+    return this.createData(url);
+  }
+
+  insertEmployeeDataDetails(
+    employeeID: number,
+    modifiedDate: any,
+    mobile1: string,
+    mobile2: string,
+    landline: string,
+    email: string,
+    selectedBloodType: number,
+    selectedCivilStatus: number,
+    add11: string,
+    add21: string,
+    add12: string,
+    add22: string,
+    add13: string,
+    add23: string,
+    selectedPostalCity1: number,
+    selectedPostalCity2: number,
+    selectedStructureType1: number,
+    selectedStructureType2: number,
+    selectedOwnershipType1: number,
+    selectedOwnershipType2: number,
+    contactFullname: string,
+    contactMobile: string,
+    contactLandline: string,
+    selectedContactRelationship: number
+  ) {
+    const url = 'http://'+ this.config.ipPort +'/insertEmployeeDataDetails?employeeID=' + employeeID + 
+    '&modifiedDate=' + modifiedDate + 
+    '&mobile1=' + mobile1 +
+    '&mobile2=' + mobile2 +
+    '&landline=' + landline +
+    '&email=' + email +
+    '&selectedBloodType=' + selectedBloodType +
+    '&selectedCivilStatus=' + selectedCivilStatus +
+    '&add11=' + add11 +
+    '&add21=' + add21 +
+    '&add12=' + add12 +
+    '&add22=' + add22 +
+    '&add13=' + add13 +
+    '&add23=' + add23 +
+    '&selectedPostalCity1=' + selectedPostalCity1 +
+    '&selectedPostalCity2=' + selectedPostalCity2 +
+    '&selectedStructureType1=' + selectedStructureType1 +
+    '&selectedStructureType2=' + selectedStructureType2 +
+    '&selectedOwnershipType1=' + selectedOwnershipType1 +
+    '&selectedOwnershipType2=' + selectedOwnershipType2 +
+    '&contactFullname=' + contactFullname +
+    '&contactMobile=' + contactMobile +
+    '&contactLandline=' + contactLandline +
+    '&selectedContactRelationship=' + selectedContactRelationship;
+
+    return this.createData(url);
+
+  }
 
   updateEmployeeEducationData( 
     id: number,
@@ -423,9 +506,10 @@ import { ConfigService } from './config.service';
   updateData(url: any) {
     return this.http.put(url, "")
     .pipe(
-      map((res) => res.json()),
+      map((res) => res.json()  
+      ),
       catchError(error => 
-        throwError(new Error('Server Error, please contact HR Analytics immediately.'))
+        throwError(error)
       )
     );
   }
@@ -435,7 +519,7 @@ import { ConfigService } from './config.service';
     .pipe(
       map((res) => res.json()),
       catchError(error => 
-        throwError(new Error('Server Error, please contact HR Analytics immediately.'))
+        throwError(error)
       )
     );
   }
@@ -445,7 +529,7 @@ import { ConfigService } from './config.service';
     .pipe(
       map((res) => res.json()),
       catchError(error => 
-        throwError(new Error('Server Error, please contact HR Analytics immediately.'))
+        throwError(error)
       )
     );
   }

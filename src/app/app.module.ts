@@ -40,6 +40,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FinishPageComponent } from './finish-page/finish-page.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DialogAddNewFamilyMemberComponent } from './dialog-add-new-family-member/dialog-add-new-family-member.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // const fabRipple = new MDCRipple(document.querySelector('.mdc-fab'));
 
@@ -53,7 +55,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     DialogSelectParentComponent,
     DialogSelectEducationTypeComponent,
     DialogSelectAddLanguageComponent,
-    FinishPageComponent
+    FinishPageComponent,
+    DialogAddNewFamilyMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatRadioModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatTooltipModule
   ],
   providers: [
     MatSliderModule,
@@ -92,9 +96,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     LoginComponent
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ DialogMessageComponent, 
+  entryComponents: [ 
+    DialogMessageComponent, 
     DialogSelectParentComponent, 
     DialogSelectEducationTypeComponent,
-    DialogSelectAddLanguageComponent ]
+    DialogSelectAddLanguageComponent,
+    DialogAddNewFamilyMemberComponent ]
 })
 export class AppModule { }

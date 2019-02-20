@@ -27,6 +27,7 @@ body {
 
 .mat-form-field-infix {
     width: 220px !important;
+    padding-top: 5px;
 }
 
 
@@ -70,4 +71,8 @@ input[type=text]:focus:not([readonly]) {
 
 .mat-horizontal-stepper-header {
     padding: 0 20px !important; 
+}
+
+svg {
+    color: #ff4081 !important;
 }
